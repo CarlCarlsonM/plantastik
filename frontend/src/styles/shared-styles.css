@@ -1,0 +1,22 @@
+/* 
+  Estilos para partes que son compartidas por varios componentes.
+  Por ejemplo: la barra de navegación y la imagen de Biggie Cheese.
+*/
+
+.generic-user-img {
+  height: 5vh;
+}
+
+.user-info-navbar-container {
+  width: auto;
+}
+
+.biggie-bg-image {
+  height: 80vh;
+  width: 100%;
+  background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--zqQ8L689--%2Ft_Preview%2Fb_rgb%3Affffff%2Cc_lpad%2Cf_jpg%2Ch_630%2Cq_90%2Cw_1200%2Fv1608499761%2Fproduction%2Fdesigns%2F17655738_0.jpg&f=1&nofb=1&ipt=8707f9e60fd2f40310b55808f8329a23fe957d27a73bdcf3182a5745b0f5b385&ipo=images");
+}
+
+.bg-image > .mask {
+  background: linear-gradient(132deg, rgba(221, 2, 3, 0.250) 0.00%, rgba(251, 137, 2, 0.250) 20.00%, rgba(248, 235, 5, 0.250) 40.00%, rgba(0, 127, 38, 0.250) 60.00%, rgba(5, 75, 249, 0.250) 80.00%, rgba(114, 6, 130, 0.250) 100.00%);
+}

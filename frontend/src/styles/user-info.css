@@ -1,0 +1,13 @@
+.MyPlansButton,
+.CreatePlanButton,
+.MyInterestedPlandsButton,
+.UpdatePersonalDataButton {
+  margin: 10px;
+  width: 150px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+}
+
+.ButtonsRow {
+  display: flex;
+  justify-content: center;
+}
