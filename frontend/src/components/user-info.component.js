@@ -24,34 +24,35 @@ export default class UserInfo extends Component {
     return (
       <>
         <Container fluid>
-          <Row>
-          <UserInfoShowUserData
-              name={name}
-              email={email}
-              gender={gender}
-              age={age}
-            />
-          </Row>
+          <div className='user-info-container'>
+            <Row>
+            <UserInfoShowUserData
+                name={name}
+                email={email}
+                gender={gender}
+                age={age}
+              />
+            </Row>
+              
+            <Row className='ButtonsRow'>
+              
+              <Button className='MyPlansButton' as={Link} to="/my-plans">
+                Mis Planes
+              </Button>
             
-          <Row className='ButtonsRow'>
-            
-            <Button className='MyPlansButton' as={Link} to="/my-plans">
-              Mis Planes
-            </Button>
-           
-            <Button className='CreatePlanButton' as={Link} to="/create-plan">
-              Crear plan
-            </Button>
+              <Button className='CreatePlanButton' as={Link} to="/create-plan">
+                Crear plan
+              </Button>
 
-            <Button className='MyInterestedPlandsButton' as={Link} to="/my-interested-plans">
-              Mis Planes de Interes
-            </Button>
+              <Button className='MyInterestedPlandsButton' as={Link} to="/my-interested-plans">
+                Mis Planes de Interes
+              </Button>
 
-            <Button className='UpdatePersonalDataButton' as={Link} to="/update-personal-data">
-              Actualizar Datos
-            </Button>
-          </Row>
-          
+              <Button className='UpdatePersonalDataButton' as={Link} to="/update-personal-data">
+                Actualizar Datos
+              </Button>
+            </Row>
+          </div>  
         </Container>
       </>
     )

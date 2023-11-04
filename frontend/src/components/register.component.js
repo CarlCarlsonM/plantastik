@@ -1,12 +1,51 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import Axios from 'axios';
 
 export default class Register extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        name: '',
+        email: '',
+        password: '',
+        gender: '',
+        age: '',
+        role: 'USER',
+      };
+    }
   render() {
+    const { name, email, password, gender, age, role } = this.state;
+    
+
+    /*
+    const [name,setName] = useState("");
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const [gender,setGender] = useState("");
+    const [age,setAge] = useState("");
+    const [role,setRole] = useState("USER");
+    */
+
+    const add = () => {
+      Axios.post("http://localhost:3001/create", {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        gender: this.state.gender,
+        age: this.state.age,
+        role: this.state.role,
+      }).then(() => {
+        alert("USUARIO CREADO");
+      });
+    };
+  
+
+
     return (
       <>
         <Container fluid>
@@ -26,13 +65,16 @@ export default class Register extends Component {
               </h5>
               <Form className="w-100">
                 <Form.Group className="mb-2" controlId="formBasicEmail">
-                  <Form.Control type="text" placeholder="Ingresa tu nombre" />
+                  <Form.Control type="text" placeholder="Ingresa tu nombre" 
+                  onChange={(event) => this.setState({ name: event.target.value })} />
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Ingresa tu email" />
+                  <Form.Control type="email" placeholder="Ingresa tu email"
+                  onChange={(event) => this.setState({ email: event.target.value })}  />
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicPassword">
-                  <Form.Select aria-label="Default select example">
+                  <Form.Select aria-label="Default select example" 
+                  onChange={(event) => this.setState({ gender: event.target.value })} >
                     <option>¿Cuál es tu género?</option>
                     <option value="1">Masculino</option>
                     <option value="2">Femenino</option>
@@ -42,12 +84,14 @@ export default class Register extends Component {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicEmail">
-                  <Form.Control type="number" placeholder="Ingresa tu edad" />
+                  <Form.Control type="number" placeholder="Ingresa tu edad" 
+                  onChange={(event) => this.setState({ age: event.target.value })}/>
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicPassword">
                   <Form.Control
                     type="password"
                     placeholder="Crea una contraseña"
+                    onChange={(event) => this.setState({ password: event.target.value })}
                   />
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicCheckbox">
@@ -61,6 +105,7 @@ export default class Register extends Component {
                     className="btn btn-outline-primary"
                     to={"/user-info"}
                     size="lg"
+                    onClick={add}
                   >
                     Regístrate
                   </Link>
