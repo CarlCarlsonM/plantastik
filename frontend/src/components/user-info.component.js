@@ -8,12 +8,12 @@ import Button from 'react-bootstrap/Button';
 //css
 import '../styles/user-info.css';
 
-export default class UserInfo extends Component {
+export default function UserInfo() {
   
   
   
   
-  render() {
+  
 
     //la idea es que esto se cambie con los datos de la base de datos
     const name = 'Sergio Castro';
@@ -56,5 +56,5 @@ export default class UserInfo extends Component {
         </Container>
       </>
     )
-  }
+  
 }

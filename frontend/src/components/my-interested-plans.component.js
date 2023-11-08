@@ -4,12 +4,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 
-export default class MyInterestedPlans extends Component {
+export default function MyInterestedPlans() {
   
   
   
   
-  render() {
+  
     //pagina en blanco, por ahora
     return (
       <>
@@ -27,5 +27,5 @@ export default class MyInterestedPlans extends Component {
         </Container>
       </>
     )
-  }
+  
 }
