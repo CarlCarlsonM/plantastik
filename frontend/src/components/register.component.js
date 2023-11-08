@@ -19,7 +19,7 @@ export default function Register() {
     errors: {}
     
   });
-
+  const navigate = useNavigate()
   
 
   const validation = (values) =>{
@@ -80,10 +80,10 @@ export default function Register() {
         add(); 
         
       }else{
-        alert("no creado");
+        alert("USUARIO NO CREADO");
       }
     }
-    const navigate = useNavigate()
+    
     const add = () => {
       Axios.post("http://localhost:3001/create", {
         name: state.name,
