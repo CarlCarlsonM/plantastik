@@ -11,6 +11,7 @@ export default function Login()  {
   const [state, setState] = useState({
     password: '',
     email: '',
+    login: false,
     errors: {}
     
   });
@@ -29,9 +30,9 @@ export default function Login()  {
     }
 
     // La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
-    let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if (!passwordRegex.test(state.password)) {
-        error.password = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.";
+    
+    if (!state.password.trim()) {
+      error.password = "la contraseña no puede ser vacia.";
     }
     return error;
   }
@@ -39,6 +40,7 @@ export default function Login()  {
   const handleInput = (event) => {
       
     setState({
+      ...state,
       [event.target.name]: event.target.value
      });
 
@@ -47,9 +49,43 @@ export default function Login()  {
   const handleSubmit = (event) => {
       
     event.preventDefault();
-    setState({ errors: validation(state.email, state.password) });
+    const errors = validation(state.name, state.email,state.gender,state.age, state.password);
+
+      setState({
+        ...state,
+        errors: errors
+      });
+
+    if(errors.email ==="" && errors.password === ""){
+        
+       login();
+      
+    }else{
+      alert("FALLO EN EL INICIO DE SESION");
+    }
 
   }
+
+  const login = () => {
+    Axios.post("http://localhost:3001/login", {
+      email: state.email,
+      password: state.password,
+    }).then((res) => {
+        if(res.data === "Success"){
+          navigate("/user-info");
+          setState({
+            ...state,
+            login: true
+          });
+        }else{
+          alert("no record existed")
+        }
+      
+      
+      
+
+    });
+  };
   
   return (
     <>
@@ -89,7 +125,7 @@ export default function Login()  {
               </Form.Group>
               <div className="d-grid gap-2">
               <input className="btn btn-outline-primary" size="lg" type="submit" value="Iniciar Sesión" />
-              
+
                 
               </div>
               <Form.Text id="passwordHelpBlock" muted>

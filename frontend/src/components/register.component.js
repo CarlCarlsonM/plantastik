@@ -98,8 +98,6 @@ export default function Register() {
         
         navigate("/");
 
-       
-
       });
     };
 
