@@ -23,7 +23,7 @@ app.post("/create",(req,res)=>{
     const role = req.body.role;
 
     
-    db.query('INSERT INTO `user`(`name`, `email`, `password`, `gender`, `age`, `role`) VALUES (?, ?, ?, ?, ?,?)',
+    db.query('INSERT INTO `user`(`name`, `email`, `password`, `gender`, `age`, `role`) VALUES (?, ?, ?, ?, ?,"USER")',
     [name,email,password,gender,age,role],
     (err,result) =>{
 

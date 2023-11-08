@@ -1,30 +1,28 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Axios from 'axios';
 
-
-
-export default class Register extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        name: '',
-        email: '',
-        password: '',
-        gender: '',
-        age: '',
-        role: 'USER',
-        errors: {}
-      };
-    }
-  render() {
-    const { name, email, password, gender, age, role,errors } = this.state;
+export default function Register() {
     
+  const [state, setState] = useState({
+    name: '',
+    email: '',
+    password: '',
+    gender: '',
+    age: '',
+    role: 'USER',
+    userRegistered: false,
+    errors: {}
+    
+  });
 
-    function validation(values){
+  
+
+  const validation = (values) =>{
       
       let error = {};
       error.email="";
@@ -33,73 +31,79 @@ export default class Register extends Component {
       error.age ="";
 
       // Validar que el nombre no esté vacío
-      if (!name.trim()) {
+      if (!state.name.trim()) {
         error.name = "El nombre no puede estar vacío.";
       }
-
-      if (isNaN(age) || age <= 0) {
+      
+      if (isNaN(state.age) || state.age <= 0) {
         error.age = "Por favor, introduce una edad válida.";
       }
       
 
       // Expresión regular para validar el correo electrónico
       let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-      if (!emailRegex.test(email)) {
+      if (!emailRegex.test(state.email)) {
           error.email= "El correo electrónico no es válido.";
       }
 
       // La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número
       let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-      if (!passwordRegex.test(password)) {
+      if (!passwordRegex.test(state.password)) {
           error.password = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.";
       }
-
       return error;
 
     }
-
     const handleInput = (event) => {
       
-      this.setState({
+      setState({
+        ...state,
         [event.target.name]: event.target.value
        });
-
-    }
-
-    const handleSubmit = (event) => {
-      
-      event.preventDefault();
-      this.setState({ errors: validation(name, email,gender,age, password) });
-
-      if(errors.name === "" && errors.email ==="" && errors.password === "" && errors.age === ""){
-        add();
-        
-        
-
-      }
     }
     
+    
+    const handleSubmit = (event) => {
+      event.preventDefault();
 
+      const errors = validation(state.name, state.email,state.gender,state.age, state.password);
 
+      setState({
+        ...state,
+        errors: errors
+      });
+      
+      
+      
+      if(errors.name === "" && errors.email ==="" && errors.password === "" && errors.age === ""){
+        
+        add(); 
+        
+      }else{
+        alert("no creado");
+      }
+    }
+    const navigate = useNavigate()
     const add = () => {
       Axios.post("http://localhost:3001/create", {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-        gender: this.state.gender,
-        age: this.state.age,
-        role: this.state.role,
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        gender: state.gender,
+        age: state.age,
+        role: state.role,
       }).then(() => {
         alert("USUARIO CREADO");
+        state.userRegistered= true;
         
+        navigate("/");
+
+       
+
       });
     };
-  
-
 
     return (
-
-
 
       <>
         <Container fluid>
@@ -117,6 +121,7 @@ export default class Register extends Component {
                 Al ser usuario, podrás subir planes y calificar a los que ya
                 fuiste. ¡Comparte tus experiencias con el mundo!
               </h5>
+              
               <Form className="w-100" onSubmit={handleSubmit}>
                 <Form.Group className="mb-2" controlId="formBasicEmail">
                   <Form.Control 
@@ -124,9 +129,8 @@ export default class Register extends Component {
                     name="name"
                     placeholder="Ingresa tu nombre" 
                     onChange={handleInput} />
-                  {errors.name && <span className="text-danger">{errors.name}</span>}
+                  {state.errors.name && <span className="text-danger">{state.errors.name}</span>}
                 
-
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicEmail">
                   <Form.Control 
@@ -134,7 +138,7 @@ export default class Register extends Component {
                     name ="email" 
                     placeholder="Ingresa tu email"
                     onChange={handleInput} />
-                  {errors.email && <span className="text-danger">{errors.email}</span>}
+                  {state.errors.email && <span className="text-danger">{state.errors.email}</span>}
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicPassword">
                   <Form.Select aria-label="Default select example" 
@@ -146,8 +150,7 @@ export default class Register extends Component {
                     <option value="Plantastik">
                       Plantastik (prefiero no indicarlo)
                     </option>
-                  </Form.Select>
-                  
+                  </Form.Select>   
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicEmail">
                   <Form.Control 
@@ -155,7 +158,7 @@ export default class Register extends Component {
                     name="age"
                     placeholder="Ingresa tu edad" 
                     onChange={handleInput}/>
-                  {errors.age && <span className="text-danger">{errors.age}</span>}
+                  {state.errors.age && <span className="text-danger">{state.errors.age}</span>}
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicPassword">
                   <Form.Control
@@ -164,7 +167,7 @@ export default class Register extends Component {
                     placeholder="Crea una contraseña"
                     onChange={handleInput}
                   />
-                  {errors.password && <span className="text-danger">{errors.password}</span>}
+                  {state.errors.password && <span className="text-danger">{state.errors.password}</span>}
                 </Form.Group>
                 <Form.Group className="mb-2" controlId="formBasicCheckbox">
                   <Form.Check
@@ -174,12 +177,12 @@ export default class Register extends Component {
                 </Form.Group>
                 <div className="d-grid gap-2">
                   <input className="btn btn-outline-primary" size="lg" type="submit" value="Registrate" />
-                </div>
+                </div> 
               </Form>
             </Col>
           </Row>
         </Container>
       </>
     );
-  }
+  
 }
