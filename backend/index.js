@@ -57,6 +57,29 @@ app.post("/login",(req,res)=>{
     }
     );
 })
+
+app.post("/searchUser",(req,res)=>{
+    
+    const id = req.body.id;
+    
+    
+    db.query('SELECT * FROM `user` WHERE `id_user` = ?;',
+    [id],
+    (err,result) =>{
+
+        if(err){
+            console.log(err)
+        }
+
+        if (result.length > 0){
+            return res.json({message: "Success", userData: result[0]});
+        }else{
+            return res.json({message: "Failed"});
+        }
+
+    }
+    );
+})
  
 
 app.listen(3001,()=>{

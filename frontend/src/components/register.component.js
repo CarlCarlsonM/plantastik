@@ -96,7 +96,7 @@ export default function Register() {
         alert("USUARIO CREADO");
         state.userRegistered= true;
         
-        navigate("/");
+        navigate("/login");
 
       });
     };

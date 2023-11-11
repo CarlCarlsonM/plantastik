@@ -88,7 +88,8 @@ export default function Login()  {
           
           setIsLoggedIn(true)
           setAuthUser({
-            idUser: res.data.userData.id_user
+            idUser: res.data.userData.id_user,
+            name: res.data.userData.name
           })
 
         

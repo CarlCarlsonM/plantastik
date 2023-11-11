@@ -74,7 +74,7 @@ import {
               alt="The user"
               className="generic-user-img me-2"
             ></img>
-            <span>Usuario Plantastik</span>
+            <span>{authUser.name}</span>
             
           </MDBContainer> </Link>):<Link to="/login">
                             <button>Inicia sesión</button>

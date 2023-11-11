@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 
 const AuthContext = React.createContext();
 
@@ -12,6 +12,8 @@ export function AuthProvider(props){
     const [authUser, setAuthUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+
+    
     
 
     const value = {
