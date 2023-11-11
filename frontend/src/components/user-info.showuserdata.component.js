@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import '../styles/user-info.showuserdata.component.css';
 import Container from "react-bootstrap/Container";
 
-export default class UserInfoShowUserData extends Component {
+export default function UserInfoShowUserData(props)  {
 
-    
-    render() {
+  
       return (
         <>
           <Container fluid>
@@ -15,17 +14,17 @@ export default class UserInfoShowUserData extends Component {
                     alt = 'user image'/>
                 <div className = 'personal-information'>
                     <p className = 'user-name'> 
-                    <strong>Nombre de usuario: {this.props.name} </strong> 
+                    <strong>Nombre de usuario: {props.name} </strong> 
                     </p>
                     <p className='user-email'> Correo electronico:  
-                    {this.props.email} </p> 
-                    <p className='user-gender'>Genero: {this.props.gender} </p>
-                    <p className='user-age'>edad: {this.props.age} años </p>
+                    {props.email} </p> 
+                    <p className='user-gender'>Genero: {props.gender} </p>
+                    <p className='user-age'>edad: {props.age} años </p>
 
                 </div>
             </div>           
           </Container>
         </>
       )
-    }
+    
   }

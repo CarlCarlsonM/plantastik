@@ -1,7 +1,8 @@
 .MyPlansButton,
 .CreatePlanButton,
 .MyInterestedPlandsButton,
-.UpdatePersonalDataButton {
+.UpdatePersonalDataButton,
+.LogOutButton {
   margin: 10px;
   width: 150px; /* Adjust as needed */
   height: 50px; /* Adjust as needed */
