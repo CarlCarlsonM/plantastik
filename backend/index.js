@@ -49,9 +49,9 @@ app.post("/login",(req,res)=>{
         }
 
         if (result.length > 0){
-            return res.json("Success");
+            return res.json({message: "Success", userData: result[0]});
         }else{
-            return res.json("Failed");
+            return res.json({message: "Failed"});
         }
 
     }

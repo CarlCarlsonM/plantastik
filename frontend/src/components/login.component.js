@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Axios from 'axios';
 export default function Login()  {
+  
+  const {authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn} = useAuth(); 
+
   
 
   const [state, setState] = useState({
@@ -15,8 +22,8 @@ export default function Login()  {
     errors: {}
     
   });
+  
   const navigate = useNavigate()
-
   const validation = (values) =>{
       
     let error = {};
@@ -71,12 +78,21 @@ export default function Login()  {
       email: state.email,
       password: state.password,
     }).then((res) => {
-        if(res.data === "Success"){
+        if(res.data.message === "Success"){
           navigate("/user-info");
           setState({
             ...state,
             login: true
           });
+
+          
+          setIsLoggedIn(true)
+          setAuthUser({
+            idUser: res.data.userData.id_user
+          })
+
+        
+          
         }else{
           alert("no record existed")
         }
