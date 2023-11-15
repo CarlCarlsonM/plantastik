@@ -12,3 +12,16 @@
   display: flex;
   justify-content: center;
 }
+
+.CreatePlanButton{
+  background-color: rgb(14, 223, 14);
+}
+.RemoveAccountButton{
+  margin: 10px;
+  width: 150px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  background-color: rgb(223, 52, 14);
+}
+.MyInterestedPlandsButton{
+  background-color: rgb(223, 150, 14);
+}

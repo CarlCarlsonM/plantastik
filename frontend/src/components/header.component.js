@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../Contexts/AuthContext';
-
+import Image from 'react-bootstrap/Image';
 
 import {
   MDBContainer,
@@ -31,13 +31,13 @@ import {
   return (
 
     <>
-    
-      <MDBNavbar bgColor="dark" expand="lg" fixed="top">
+
+      <MDBNavbar bgColor="white" expand="lg" fixed="top">
         <MDBContainer>
           <MDBNavbarBrand>
 
             <Link to={"/"} className="text-light"> 
-              <MDBIcon fas icon="calendar-check" className="me-2" />
+              <Image src="/plantastiknav.png" className="navbar-img" />
               Plantastik
             </Link>
           </MDBNavbarBrand>
@@ -60,25 +60,32 @@ import {
                   type="Search"
                 />
                 <MDBBtn outline className="text-light" color="secondary">
-                  <MDBIcon icon="search" />
+                  <MDBIcon icon="search" color="black"/>
                 </MDBBtn>
               </MDBInputGroup>
             </MDBNavbarNav>
           </MDBCollapse>
           {isLoggedIn ?(
             <Link to="/user-info">
-          <MDBContainer className="ms-auto user-info-navbar-container text-white">
-            
-            <img
-              src="https://icon-library.com/images/generic-user-icon/generic-user-icon-13.jpg"
-              alt="The user"
-              className="generic-user-img me-2"
-            ></img>
-            <span>{authUser.name}</span>
-            
-          </MDBContainer> </Link>):<Link to="/login">
-                            <button>Inicia sesión</button>
-                          </Link>}
+              <MDBContainer className="ms-auto user-info-navbar-container text-white">
+                <img
+                  src={require("../Iconos/usuario.png")} 
+                  alt="The user"
+                  className="generic-user-img me-2"
+                ></img>
+                <span className="NombreUsuarioPerfil">{authUser.name}</span>
+              </MDBContainer>{" "}
+            </Link>
+          ) : (
+            <Link to="/login">
+              <input
+                className="btn btn-primary"
+                size="lg"
+                type="submit"
+                value="Iniciar Sesión"
+              />
+            </Link>
+          )}
         </MDBContainer>
       </MDBNavbar>
       

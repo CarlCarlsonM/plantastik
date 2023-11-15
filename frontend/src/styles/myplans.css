@@ -1,0 +1,67 @@
+.ContenedorMisPlanes{
+    margin-top: 25px;
+}
+.Contenedor-Plan{
+    width: 1170px;
+    height: auto;
+    margin: 10px 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 5px 5px #888888;
+    transition: transform 0.3s ease-in-out;
+}
+.Contenedor-Plan:hover{
+    transform: scale(0.95);
+}
+.Contenido-Plan{
+    width: 100%;
+    height: auto;
+    font-size: 15px;
+    text-align: center;
+    padding: 40px;
+    font-weight: 400;/*Hace más delgada la letra*/
+    line-height: 1.5rem;/*Interlineado*/
+}
+.star {
+    font-size: 50px;
+    color: #ddd;
+}
+.star.rated {
+    color: gold;
+}
+.star.partial {
+    position: relative;
+}
+.star.partial::after {
+    content: '★';
+    position: absolute;
+    clip-path: polygon(0 0, var(--fill) 0%, var(--fill) 100%, 0% 100%);
+    color: #ddd;
+}
+.CalificacionPlan{
+    align-items: center;
+    display: flex;
+}
+.NumeroCalificacion{
+    margin-left: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.Imagen-Plan{
+    height: 100%;
+    width: auto;
+    margin: 0px 10px;
+}
+.DescripcionPlan{
+    text-align: justify;
+}
+.EspecificosPlan{
+    text-align: left;
+}
+.ComentariosPlan{
+    text-align: right;
+}
+
+  

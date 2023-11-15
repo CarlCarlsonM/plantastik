@@ -3,14 +3,22 @@ const app = express();
 const mysql = require("mysql")
 const cors = require("cors");
 
+
+const dbPasswordSergio = "123456";
+const dbPasswordCarlos = "password";
+const dbPasswordNicolas = "root";
+
+
 app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:'123456',
-    database:'plantastik_db'
+
+  host: "localhost",
+  user: "root",
+  password: dbPasswordNicolas,
+  database: "plantastik_db",
+
 });
 
 
@@ -82,6 +90,20 @@ app.post("/searchUser",(req,res)=>{
 })
  
 
-app.listen(3001,()=>{
-    console.log("Corriendo en el puerto 3001")
+
+app.listen(3001, () => {
+  console.log("Corriendo en el puerto 3001");
+});
+
+app.get("/searchMyPlans", (req,res)=>{
+    const id = req.query.id;
+    db.query("SELECT `plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id], 
+    (err, result) =>{
+        if (err){
+            console.log(err);
+        }else{
+            res.send(result);
+        }
+    })
 })
+

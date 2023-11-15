@@ -92,6 +92,14 @@ export default function UserInfo() {
               <Button className='LogOutButton' as={Link} to="login" onClick={handleLogOut}>
                 Cerrar sesion
               </Button>
+              <Button
+                className="RemoveAccountButton"
+                as={Link}
+                to="/remove-account"
+              >
+                <i class="fa-solid fa-pen-nib me-1"></i>
+                  Eliminar Cuenta
+              </Button>
             </Row>
           </div>  
         </Container>

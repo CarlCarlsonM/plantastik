@@ -10,19 +10,11 @@ import {
   MDBCol,
 } from "mdb-react-ui-kit";
 
-
-
-
-
-
-
 export default function Footer() {
-  
   return (
-
-    <>  
+    <>
       <MDBFooter
-        bgColor="dark"
+        bgColor="light"
         className="text-center text-white ms-0 me-0 mb-0"
       >
         <MDBContainer className="p-3">
@@ -39,7 +31,7 @@ export default function Footer() {
             <MDBCol size="auto">
               <MDBBtn
                 outline
-                color="light"
+                color="dark"
                 floating
                 className="m-1"
                 href="https://drive.google.com/drive/folders/1-DSRks1KPTEKJU1S46UPby-bZaXlEhu_"
@@ -49,7 +41,7 @@ export default function Footer() {
               </MDBBtn>
               <MDBBtn
                 outline
-                color="light"
+                color="dark"
                 floating
                 className="m-1"
                 href="https://github.com/CarlCarlsonM/plantastik"
@@ -59,7 +51,7 @@ export default function Footer() {
               </MDBBtn>
               <MDBBtn
                 outline
-                color="light"
+                color="dark"
                 floating
                 className="m-1"
                 href="https://camurcioa.atlassian.net/jira/software/projects/PLAN/boards/1"
@@ -71,9 +63,6 @@ export default function Footer() {
           </MDBRow>
         </MDBContainer>
       </MDBFooter>
-    
     </>
   );
 }
-
-
