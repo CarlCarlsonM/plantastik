@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function Register() {
     
@@ -93,11 +94,16 @@ export default function Register() {
         age: state.age,
         role: state.role,
       }).then(() => {
-        alert("USUARIO CREADO");
-        state.userRegistered= true;
-        
+        //alert("USUARIO CREADO");
+        state.userRegistered = true;
+        Swal.fire({
+          title: "<strong>¡Registro exitoso!</strong>",
+          html:"<i><strong>"+state.name+"</strong> fuiste registrad@ con éxito</i>",
+          icon:'success',
+          timer:3000
+        })
+  
         navigate("/login");
-
       });
     };
 

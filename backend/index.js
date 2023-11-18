@@ -104,3 +104,38 @@ app.get("/searchMyPlans", (req,res)=>{
     })
 })
 
+app.put("/updateUser",(req,res)=>{
+
+    const name = req.body.name;
+    const gender = req.body.gender;
+    const age = req.body.age;
+    const id = req.body.id;
+  
+    db.query('UPDATE user SET name = ?,gender = ?,age = ? WHERE id_user = ?',
+    [name,gender,age,id],
+    (err,result) =>{
+      if(err){console.log(err)}
+      else{
+        return res.json({message: "Update_User"});
+      }
+    }
+    )
+})
+
+app.delete('/deleteUser/:id',(req,res)=>{
+
+    const id = req.params.id;
+    
+    db.query('DELETE FROM user WHERE id_user = ?',[id],
+    (err,result) =>
+    {
+        if(err){console.log(err)}
+  
+        else{
+            console.log(id);
+            return res.json({message: "User_successfully_deleted"});
+        }
+    }
+    )
+})
+

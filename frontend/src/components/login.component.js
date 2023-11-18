@@ -97,10 +97,6 @@ export default function Login()  {
         }else{
           alert("no record existed")
         }
-      
-      
-      
-
     });
   };
   

@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import UserInfoShowUserData  from "./user-info.showuserdata.component";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from "../Contexts/AuthContext";
 import Button from 'react-bootstrap/Button';
 import Axios from 'axios';
+import Swal from 'sweetalert2'
 
 //css
 import '../styles/user-info.css';
@@ -21,6 +22,7 @@ export default function UserInfo() {
 
   });
   
+  const navigate = useNavigate();
 
   const {authUser,
     setAuthUser,
@@ -32,6 +34,42 @@ export default function UserInfo() {
       setIsLoggedIn(false)
       
   
+  }
+
+  const deleteAccount = () =>{
+
+    const id= authUser.idUser;
+
+    Swal.fire({
+      title:"Eliminación de cuenta",
+      html:"<i>¿Deseas eliminar tú cuenta?</i>",
+      icon:'warning',
+      showCancelButton:true,
+      confirmButtonColor:"#3085d6",
+      cancelButtonColor:"#d33",
+      confirmButtonText:"Si, eliminarla",
+      cancelButtonText:"Cancelar"
+    }).then(result=>{
+      if (result.isConfirmed){
+
+        Axios.delete(`http://localhost:3001/deleteUser/${id}` 
+        ).then((res) => {
+          if(res.data.message === "User_successfully_deleted"){
+            //alert("User successfully delete");
+            Swal.fire(
+              "Eliminación completa",
+              "Tú cuenta ha sido eliminada",
+              "success"
+            )
+            setIsLoggedIn(false);
+            navigate("login");
+          }
+          else{
+            alert("Could not delete account")
+          }
+        });
+      }
+    })
   }
 
     useEffect(() => {
@@ -94,8 +132,7 @@ export default function UserInfo() {
               </Button>
               <Button
                 className="RemoveAccountButton"
-                as={Link}
-                to="/remove-account"
+                onClick={deleteAccount}
               >
                 <i class="fa-solid fa-pen-nib me-1"></i>
                   Eliminar Cuenta

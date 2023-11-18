@@ -11,7 +11,7 @@ import UserInfo from "./components/user-info.component";
 import CreatePlan from "./components/create-plan.component";
 import MyInterestedPlans from "./components/my-interested-plans.component";
 import MyPlans from "./components/my-plans.component";
-import UpdatePersonalData from "./components/create-plan.component";
+import UpdatePersonalData from "./components/update-personal-data.component";
 import { AuthProvider } from "./Contexts/AuthContext";
 import { useAuth } from "./Contexts/AuthContext";
 import MainPage from "./components/main-page.component";
