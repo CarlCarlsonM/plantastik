@@ -4,9 +4,6 @@ const mysql = require("mysql")
 const cors = require("cors");
 
 
-const dbPasswordSergio = "123456";
-const dbPasswordCarlos = "password";
-const dbPasswordNicolas = "root";
 
 
 app.use(cors());
@@ -16,7 +13,7 @@ const db = mysql.createConnection({
 
   host: "localhost",
   user: "root",
-  password: dbPasswordNicolas,
+  password: "password",
   database: "plantastik_db",
 
 });
