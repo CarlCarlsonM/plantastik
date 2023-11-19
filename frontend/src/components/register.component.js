@@ -86,7 +86,7 @@ export default function Register() {
     }
     
     const add = () => {
-      Axios.post("http://localhost:3001/create", {
+      Axios.post("http://localhost:3001/register", {
         name: state.name,
         email: state.email,
         password: state.password,
