@@ -35,7 +35,7 @@ function App() {
 
       <MDBContainer fluid className="pt-5">
         <Routes>
-          <Route exact path="/" element={<MainPage />} />
+          <Route exact path="/" element={<Login />} />
 
           <Route
             exact

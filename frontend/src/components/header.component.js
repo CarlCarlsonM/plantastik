@@ -35,11 +35,15 @@ import {
       <MDBNavbar bgColor="white" expand="lg" fixed="top">
         <MDBContainer>
           <MDBNavbarBrand>
-
-            <Link to={"/"} className="text-light"> 
+          {isLoggedIn ?(
+            <Link to={"/main-page"} className="text-light"> 
               <Image src="/plantastiknav.png" className="navbar-img" />
-              Plantastik
             </Link>
+          ) : (
+            <Link to={"/login"} className="text-light"> 
+              <Image src="/plantastiknav.png" className="navbar-img" />
+            </Link>
+          )}
           </MDBNavbarBrand>
           <MDBNavbarToggler
             aria-controls="navbarSupportedContent"

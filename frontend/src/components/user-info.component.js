@@ -131,7 +131,7 @@ export default function UserInfo() {
             <Button className='UpdatePersonalDataButton' as={Link} to="/update-personal-data">
               Actualizar Datos
             </Button>
-            <Button className='LogOutButton' as={Link} to="login" onClick={handleLogOut}>
+            <Button className='LogOutButton' as={Link} to="/login" onClick={handleLogOut}>
               Cerrar sesion
             </Button>
             <Button
