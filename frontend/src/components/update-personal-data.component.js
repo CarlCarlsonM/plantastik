@@ -49,10 +49,6 @@ export default function UpdateUser(props) {
           timer:3000
         })
         navigate("/user-info");
-
-        /*setAuthUser({
-          name: res.data.userData.name
-        })*/
       }
       else{
         alert("¡Ups!, tuvimos un problema. Vuelve a intentarlo");
