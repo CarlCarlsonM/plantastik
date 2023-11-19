@@ -85,6 +85,10 @@ export default function UserInfo() {
             gender: res.data.userData.gender,
             age: res.data.userData.age
           });
+          setAuthUser({
+            idUser: res.data.userData.id_user,
+            name: res.data.userData.name
+          });
 
         }
       });
