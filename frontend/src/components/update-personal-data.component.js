@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -56,10 +56,39 @@ export default function UpdateUser(props) {
     });
   }
   
+  useEffect(() => {
+    if (isLoggedIn) {
+      Axios.post("http://localhost:3001/profile", {
+        id: authUser.idUser,
+
+      }).then((res) => {
+        if (res.data.message === "Success") {
+          setState({
+            name: res.data.userData.name,
+            email: res.data.userData.email,
+            gender: res.data.userData.gender,
+            age: res.data.userData.age
+          });
+          setAuthUser({
+            idUser: res.data.userData.id_user,
+            name: res.data.userData.name
+          });
+
+        }
+      });
+    }
+  }, [isLoggedIn]);
+
+  //la idea es que esto se cambie con los datos de la base de datos
+  const name = state.name;
+  const email = state.email;
+  const gender = state.gender;
+  const age = state.age;
+
     return (
       <>
-        <Container fluid>
-          <div className="login-showuserdata">
+        <Container fluid className="p-5">
+          <div className="login-updateuserdata">
             <img
               className="defaultlogo-userimage pe-5"
               src="https://icon-library.com/images/generic-user-icon/generic-user-icon-13.jpg"
@@ -67,33 +96,38 @@ export default function UpdateUser(props) {
             />
             <div className="personal-information">
               <h1 className="text-center">Actualización de datos</h1> {}
-              <Form.Group className="mb-2" controlId="formBasicEmail">
+              <Form.Group className="mb-2 col-md-6" controlId="formBasicEmail">
+                <Form.Label className="user-name"><strong>Nombre de usuario:</strong></Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
-                  placeholder="Ingresa tu nombre" 
+                  placeholder="Ingresa tu nombre"
+                  value={name}
                   onChange={handleInput}
                 />
               </Form.Group>
               <Form.Group className="mb-2" controlId="formBasicPassword">
+              <Form.Label className="user-gender"><strong>Género:</strong></Form.Label>
                 <Form.Select
                   aria-label="Default select example"
                   name="gender"
+                  value={gender}
                   onChange={handleInput}
                 >
-                  <option>¿Cuál es tu género?</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
-                  <option value="Plantastik">
-                    Plantastik (no binario/prefiero no indicarlo)
+                  <option value="Bombastik">
+                    Bombastik (no binario/prefiero no indicarlo)
                   </option>
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-2" controlId="formBasicEmail">
+              <Form.Label className="user-age"><strong>Edad:</strong></Form.Label>
                 <Form.Control
                   type="number"
                   name="age"
                   placeholder="Ingresa tu edad"
+                  value={age}
                   onChange={handleInput}
                 />
               </Form.Group>
