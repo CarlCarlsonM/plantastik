@@ -1,0 +1,55 @@
+.ContainerDetailPlan{
+    margin-top: 35px;
+}
+
+.ContainerDetailPlan2{
+    width: 1770px;
+    height: auto;
+    margin: 10px 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 5px 5px #888888;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.InfoPlan{
+    width: 100%;
+    height: auto;
+    font-size: 15px;
+    text-align: left;
+    padding: 40px;
+    font-weight: 400;/*Hace más delgada la letra*/
+    line-height: 1.5rem;/*Interlineado*/
+}
+
+
+.PlanTitle{
+    font-size: 85px;
+
+}
+
+.PlanStars{
+    align-items: center;
+    display: flex;
+}
+.CalificationNumber{
+    margin-left: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.Image-Plan{
+    height: 100%;
+    width: auto;
+    margin: 0px 10px;
+}
+
+.PlanDescription{
+    text-align: justify;
+}
+.PlanSpecificData{
+    text-align: left;
+}

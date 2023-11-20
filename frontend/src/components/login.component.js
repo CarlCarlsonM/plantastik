@@ -78,6 +78,8 @@ export default function Login()  {
       email: state.email,
       password: state.password,
     }).then((res) => {
+      
+
         if(res.data.message === "Success"){
           navigate("/user-info");
           setState({

@@ -30,7 +30,7 @@ export default function MyPlans() {
     }).then((response)=>{
       setPlans(response.data);
       /*alert("Mostrando Mis Planes");*/
-    })
+  })
 }
 
 

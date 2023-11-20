@@ -1,6 +1,6 @@
 import "./styles/shared-styles.css";
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import {
   MDBContainer,
 
@@ -17,6 +17,7 @@ import { useAuth } from "./Contexts/AuthContext";
 import MainPage from "./components/main-page.component";
 import Header from "./components/header.component";
 import Footer from "./components/footer.component";
+import DetailPlan from "./components/detail-plan.component";
 
 
 
@@ -77,6 +78,12 @@ function App() {
             exact
             path="/main-page"
             element={<MainPage />}
+          />
+
+          <Route
+            exact
+            path="/detail-plan"
+            element={<DetailPlan />}
           />
         </Routes>
       </MDBContainer>
