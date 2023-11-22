@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useAuth } from "../Contexts/AuthContext";
+import { Link } from "react-router-dom";
 import '../styles/myplans.css';
 export default function MyPlans(props) {
     
@@ -29,9 +30,7 @@ export default function MyPlans(props) {
     };
     
 
-    const handleClick = () => {
-      alert('Abriendo Detalles del Plan');
-    };
+    
     const handleClick1 = () => {
       alert('Editar el Plan');
     };
@@ -75,11 +74,13 @@ export default function MyPlans(props) {
                       className="BotonImagen" 
                       onClick={handleClick1} 
                       style={{cursor: 'pointer', float:'left'}}/>
-                    <img 
-                      src={require("../Iconos/lupa.png")} 
-                      className="BotonImagen" 
-                      onClick={handleClick} 
-                      style={{cursor: 'pointer', float:'center'}}/>
+                    <Link to={`/detail-plan/${props.id_plan}`}>
+                      <img 
+                        src={require("../Iconos/lupa.png")} 
+                        className="BotonImagen" 
+                         
+                        style={{cursor: 'pointer', float:'center'}}/>
+                    </Link>
                     <div className='ComentariosPlan'>
                           <p>
                             <strong>98 Comentarios</strong>

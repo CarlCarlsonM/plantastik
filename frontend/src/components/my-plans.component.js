@@ -76,6 +76,7 @@ export default function MyPlans() {
             {
               MyPlansList.map((val,key)=>{
                 return <Plans
+                id_plan = {val.id_plan}
                 title={val.NombrePlan}
                 user={val.name}
                 rating={val.avg_rating}
@@ -84,6 +85,7 @@ export default function MyPlans() {
                 time={val.Hora}
                 location={val.address}
                 imagen={val.image}
+                
               />
               })
             }

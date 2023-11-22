@@ -82,7 +82,7 @@ function App() {
 
           <Route
             exact
-            path="/detail-plan"
+            path="/detail-plan/:idplan"
             element={<DetailPlan />}
           />
         </Routes>

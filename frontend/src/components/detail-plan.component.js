@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,6 +11,9 @@ import Axios from "axios";
 
 export default function DetailPlan(props) {
 
+    const { idplan } = useParams(); // Get the post id from the URL
+    
+    
     //id del usuario logueado
     const { authUser,
         setAuthUser,
@@ -19,7 +23,7 @@ export default function DetailPlan(props) {
     //Datos del plan
     const [state, setState] = useState({
         interested: false,
-        idplan: 29, //cambiar esto por el parametro que reciba de la pagina principal y sale con props.id
+        idplan: idplan, //cambiar esto por el parametro que reciba de la pagina principal y sale con props.id
         image: "",
         rating: 0,
         title: "",
@@ -30,7 +34,6 @@ export default function DetailPlan(props) {
         finalPrice: "",
         location: ""
       });
-
     //DEJAR DE ESTAR INTERESADO
 
     const NotInterested = () => {
@@ -55,7 +58,6 @@ export default function DetailPlan(props) {
           }
         }); 
     }
-
     //INTERESARSE EN EL PLAN
     const BeInterested = () => {
         //agregar registro
@@ -80,9 +82,6 @@ export default function DetailPlan(props) {
         });
         
     }
-    
-
-    
     const getDetailPlan = (id)=>{
        
         Axios.get("http://localhost:3001/DetailPlan", {
@@ -105,8 +104,7 @@ export default function DetailPlan(props) {
                 location: res.data[0].address
               });
           });
-        }
-    
+        }   
     //ver si esta interesado. si si cambiar el icono de interesado
     const Interested = (idplan,iduser)=>{
 
@@ -130,11 +128,9 @@ export default function DetailPlan(props) {
             });
         }
         
-      
         //VER INFORMACION DE DETALLE DEL PLAN
         {useEffect(() => {
             if (authUser && authUser.idUser) {
-                
                 
                 getDetailPlan(state.idplan);
             }
@@ -149,9 +145,6 @@ export default function DetailPlan(props) {
 
             }
         }, [authUser])}
-          
-
-    //Estrellas que deberian hacer lo mismo que en todas las paginas. NO TERMINADO
 
     const StarRating = ({rating}) => {
         // Limita la calificación a un máximo de 5
