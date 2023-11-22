@@ -12,17 +12,16 @@ import Axios from "axios";
 export default function DetailPlan(props) {
 
     const { idplan } = useParams(); // Get the post id from the URL
-    
-    
     //id del usuario logueado
     const { authUser,
         setAuthUser,
         isLoggedIn,
         setIsLoggedIn } = useAuth();
 
+    const [interested, setInterested] = useState(false)
     //Datos del plan
     const [state, setState] = useState({
-        interested: false,
+        
         idplan: idplan, //cambiar esto por el parametro que reciba de la pagina principal y sale con props.id
         image: "",
         rating: 0,
@@ -34,8 +33,11 @@ export default function DetailPlan(props) {
         finalPrice: "",
         location: ""
       });
-    //DEJAR DE ESTAR INTERESADO
 
+      
+        
+    
+    //DEJAR DE ESTAR INTERESADO
     const NotInterested = () => {
 
         //borrar registro
@@ -48,10 +50,7 @@ export default function DetailPlan(props) {
             
           if (res.data.message === "succesful_delete") {
             //alert("User successfully delete");
-            setState({
-                ...state,
-                interested: false
-            });
+            setInterested(false);
           }
           else {
             alert("Could not delete register")
@@ -71,10 +70,7 @@ export default function DetailPlan(props) {
             
           if (res.data.message === "succesful_add") {
             //alert("User successfully delete");
-            setState({
-                ...state,
-                interested: true
-            });
+            setInterested(true);
           }
           else {
             alert("not added as interested");
@@ -103,11 +99,13 @@ export default function DetailPlan(props) {
                 finalPrice: res.data[0].max_price,
                 location: res.data[0].address
               });
+
+              Interested(state.idplan, authUser.idUser);
           });
         }   
     //ver si esta interesado. si si cambiar el icono de interesado
     const Interested = (idplan,iduser)=>{
-
+        
         Axios.get("http://localhost:3001/Interested", {
             params: {
                 idplan: idplan,
@@ -116,35 +114,17 @@ export default function DetailPlan(props) {
 
             }).then((res) => {
                 
-                console.log(res.message);
+                
                 if(res.data.message === "Interested"){
                     
-                    setState({
-                        ...state,
-                        interested: true
-                    }); 
-                }
+                    setInterested(true);
+                } else {
+                    
+                    setInterested(false);
+                  }
 
             });
         }
-        
-        //VER INFORMACION DE DETALLE DEL PLAN
-        {useEffect(() => {
-            if (authUser && authUser.idUser) {
-                
-                getDetailPlan(state.idplan);
-            }
-        }, [authUser])}
-
-        //VER SI ESTA INTERESADO
-
-        {useEffect(() => {
-            if (authUser && authUser.idUser) {
-                
-                Interested(state.idplan, authUser.idUser);
-
-            }
-        }, [authUser])}
 
     const StarRating = ({rating}) => {
         // Limita la calificación a un máximo de 5
@@ -166,11 +146,22 @@ export default function DetailPlan(props) {
         }
         return <div>{stars}</div>;
       };
+    
+    useEffect(() => {
+        if (authUser && authUser.idUser) {
+        
+            getDetailPlan(state.idplan);
+        }
+    }, [authUser]);
+
+    
 
     return (
 
       <>
         <Container fluid className="ContainerDetailPlan">
+
+            
             <Row>
 
             <center>
@@ -186,8 +177,6 @@ export default function DetailPlan(props) {
                         
                         <div className="ContainerDetailPlan2">
 
-                            
-
                         {state.image && (
                             <img
                                 className='Image-Plan' 
@@ -198,9 +187,10 @@ export default function DetailPlan(props) {
 
                             <div className="InfoPlan">
 
-                                
+                            
 
-                                {state.interested ?(
+                        
+                                {interested ?(
                                             <img 
                                             src={require("../Iconos/interested.png")} 
                                             className="BotonImagen" 
@@ -223,16 +213,13 @@ export default function DetailPlan(props) {
                                 <strong>Creado por: </strong>{state.user}
                                 </p>
 
-                                
                                 <div className='PlanStars'>
                                     <StarRating rating={Math.round(state.rating*5)} />
                                     <p className='CalificationNumber'>
                                         {state.rating*5}
                                     </p>
                                 </div>
-                                
-
-                                
+                            
                                 <p className='PlanDescription'>
                                     {state.description}
                                 </p>
@@ -256,12 +243,8 @@ export default function DetailPlan(props) {
                         </div>
                     </center>
                 </Row>
-                
             </Container>
-
             </Row>
-
-        
         <Row>
             <Col>
             
