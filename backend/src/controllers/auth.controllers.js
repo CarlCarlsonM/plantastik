@@ -24,19 +24,25 @@ export const register = async (req, res) => {
 
 //Login del usuario
 export const login = async (req, res) => {
+
     const { email, password } = req.body;
+
+    console.log(email);
+    console.log(password);
 
     const connection = await connectDB();
 
     await connection.query('SELECT * FROM `user` WHERE `email` = ? AND `password` = ?',
         [email, password],
         (err, result) => {
-            if (err) {
-                connection.end();
-                return res.json({ message: "Failed" });
-            } else {
-                connection.end();
-                return res.json({ message: "Success", userData: result[0] });
+            if(err){        //NO CAMBIAR
+                console.log(err)
+            }
+    
+            if (result.length > 0){
+                return res.json({message: "Success", userData: result[0]});
+            }else{
+                return res.json({message: "Failed"});
             }
         }
     );
