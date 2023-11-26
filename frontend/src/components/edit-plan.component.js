@@ -9,7 +9,7 @@ import { useAuth } from "../Contexts/AuthContext";
 import Axios from "axios";
 
 
-export default function DetailPlan(props) {
+export default function EditPlan(props) {
 
     const { idplan } = useParams(); // Get the post id from the URL
     //id del usuario logueado

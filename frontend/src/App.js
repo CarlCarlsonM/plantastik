@@ -16,6 +16,7 @@ import MainPage from "./components/main-page.component";
 import Header from "./components/header.component";
 import Footer from "./components/footer.component";
 import DetailPlan from "./components/detail-plan.component";
+import EditPlan from "./components/edit-plan.component";
 
 function App() {
   const [showBasic, setShowBasic] = useState(false);
@@ -49,6 +50,7 @@ function App() {
             <Route exact path="/main-page" element={<MainPage />} />
 
             <Route exact path="/detail-plan/:idplan" element={<DetailPlan />} />
+            <Route exact path="/edit-plan/:idplan" element={<EditPlan />} />
           </Routes>
         </MDBContainer>
 
