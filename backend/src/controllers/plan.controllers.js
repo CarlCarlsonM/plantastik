@@ -18,6 +18,24 @@ export const searchMyPlans = async (req, res) => {
     );
 };
 
+export const searchAllPlans = async (req, res) => {
+    const id = req.query.id;
+    const connection = await connectDB();
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user`;", [id, id],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+                
+                res.send(result)
+                
+            }
+        }
+    );
+};
+
 //consulta para los detalles de un plan
 export const DetailPlan = async (req, res) => {
     const id = req.query.id;
