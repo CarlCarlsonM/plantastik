@@ -4,9 +4,11 @@ import Container from "react-bootstrap/Container";
 import { useAuth } from "../Contexts/AuthContext";
 import '../styles/userstatistics.css';
 import {Pie} from "react-chartjs-2"
-import { Chart, ArcElement } from 'chart.js';
+import { Chart, ArcElement, CategoryScale, Title, Tooltip, Legend } from 'chart.js';
+import 'chartjs-plugin-datalabels';
 
-Chart.register(ArcElement);
+Chart.register(ArcElement, CategoryScale, Title, Tooltip, Legend);
+
 export default function UserStatistics() {
   const [GenderList, setGender]=useState([]);
   const [AgeList, setAge]=useState([]);
@@ -44,7 +46,20 @@ const getStatsAge = ()=>{
     legend:{
       display:true,
       position: "bottom" 
-    }
+    },
+    datalabels: {
+      color: '#fff',
+      formatter: (value, ctx) => {
+        let datasets = ctx.chart.data.datasets;
+        if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+          let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+          let percentage = Math.round((value / sum) * 100) + '%';
+          return percentage;
+        } else {
+          return null;
+        }
+      },
+    },
   }
   return (
     <>
@@ -140,8 +155,8 @@ const getStatsAge = ()=>{
                               <td>{val.EdadD}</td>
                           </tr>
                           <tr>
-                              <td>Otra Edad</td>
-                              <td></td>
+                              <td>101 Años</td>
+                              <td>150 Años</td>
                               <td>{val.Otro}</td>
                           </tr>
                           <tr>

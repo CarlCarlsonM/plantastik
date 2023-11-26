@@ -21,6 +21,11 @@
     width: 400px;
     height: auto;
     margin-left: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+.ContenedorTorta:hover{
+    transform: scale(0.95);
+    cursor: pointer;
 }
 table, th, td {
     border: 1px solid black;
@@ -30,6 +35,9 @@ table, th, td {
 table{
     border: 2px solid black;
     margin-bottom: 10px;
+}
+table tr:hover{
+    background-color: #c4c2c2;
 }
 td,th{
     padding: 8px;
