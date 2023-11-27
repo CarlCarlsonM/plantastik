@@ -123,4 +123,23 @@ export const BeInterested = async (req, res) => {
     );
 };
 
+//Actualizar un plan
+export const updatePlan = async (req, res) => {
+    console.log("EJECUTA BACKEND")
+    const { name, description, date, min_price, max_price, address, id_plan, id_user_plan } = req.body;
+    const connection = await connectDB();
+    await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ? AND `id_user_plan` = ?',
+        [name, description, date, min_price, max_price, address,id_plan, id_user_plan],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                return res.json({ message: "Failed" })
+            } else {
+                connection.end();
+                return res.json({ message: "Update_Plan" })
+            }
+        }
+    );
+};
+
 

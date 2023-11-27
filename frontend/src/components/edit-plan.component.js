@@ -45,7 +45,9 @@ export default function EditPlan(props){
     };
 
     const handleSubmit =(event)=>{
+        console.log("HANDLE EJECUTADO")
         event.preventDefault();
+        updateDataPlan();
     };
 
     const getDetailPlan = (id)=>{
@@ -76,12 +78,39 @@ export default function EditPlan(props){
         }
     }, [authUser]);
 
+    const updateDataPlan =()=>{
+        console.log("SE LLAMÓ")
+        Axios.put("http://localhost:3001/updatePlan", {
+          name: state.title,
+          description: state.description,
+          date: state.date,
+          min_price: state.initialPrice,
+          max_price: state.finalPrice,
+          address: state.location,
+          id_plan: state.idplan,
+          id_user: authUser.idUser,
+        }).then((res) => {
+          if (res.data.message === "Update_Plan") {
+            Swal.fire({
+              title: "<strong>¡Actualización correcta!</strong>",
+              html:"<i>Tú información a sido actualizada con éxito</i>",
+              icon:'success',
+              timer:3000
+            })
+            navigate("/my-plans");
+          }
+          else{
+            alert("¡Ups!, tuvimos un problema. Vuelve a intentarlo");
+          }
+        });
+    }
+
     
     const title = state.title
     const description = state.description
-    const date_time = state.date
-    const min_val = state.initialPrice
-    const max_val = state.finalPrice
+    const date = state.date
+    const initialPrice = state.initialPrice
+    const finalPrice = state.finalPrice
     const location = state.location
     return (
 
@@ -111,8 +140,8 @@ export default function EditPlan(props){
                         )}
 
                             <div className="InfoPlan">
-                                <FormGroup className="mb-2 col-md-6" controlId="formBasicEmail">
-                                    <FormLabel className="user-name"><strong>Título del plan:</strong></FormLabel>
+                                <FormGroup className="mb-2 col-md-6">
+                                    <FormLabel><strong>Título del plan:</strong></FormLabel>
                                     <Form.Control
                                         type="text"
                                         name="title"
@@ -123,48 +152,55 @@ export default function EditPlan(props){
                                 </FormGroup>
 
                                 <FormGroup className="mb-3">
-                                    <FormLabel className="user-name"><strong>Descripción:</strong></FormLabel>
+                                    <FormLabel><strong>Descripción:</strong></FormLabel>
                                     <Form.Control
                                         as = "textarea"
                                         rows = {5}
-                                        name="title"
-                                        placeholder="Ingresa el título"
+                                        name="description"
+                                        placeholder="Ingresa una descripción"
                                         value={description}
                                         onChange={handleInput}
                                     />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3">
-                                    <FormLabel className="user-name"><strong>Ingresa la fecha:</strong></FormLabel>
+                                    <FormLabel><strong>Ingresa la fecha:</strong></FormLabel>
                                     <Form.Control
                                         type = "date"
-                                        value = {date_time}
+                                        name = "date_time"
+                                        value = {date}
                                         onChange={handleInput}
                                     />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3">
-                                    <FormLabel className="user-name"><strong>Precio mínimo:</strong></FormLabel>
+                                    <FormLabel><strong>Precio mínimo:</strong></FormLabel>
                                     <Form.Control
                                         type="number"
-                                        value = {min_val}
+                                        name = "minprice"
+                                        placeholder= "¿Cuánto es el mínimo de precios (COP)?"
+                                        value = {initialPrice}
                                         onChange={handleInput}
                                     />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3">
-                                    <FormLabel className="user-name"><strong>Precio máximo:</strong></FormLabel>
+                                    <FormLabel><strong>Precio máximo:</strong></FormLabel>
                                     <Form.Control
                                         type="number"
-                                        value = {max_val}
+                                        name = "maxprice"
+                                        placeholder="¿Cuánto es el máximo de precios (COP)?"
+                                        value = {finalPrice}
                                         onChange={handleInput}
                                     />
                                 </FormGroup>
 
                                 <FormGroup className="mb-3">
-                                    <FormLabel className="user-name"><strong>Ubicación:</strong></FormLabel>
+                                    <FormLabel><strong>Ubicación:</strong></FormLabel>
                                     <Form.Control
                                         type="text"
+                                        name= "location"
+                                        placeholder="¿En qué lugar será tu evento (dirección)?"
                                         value = {location}
                                         onChange={handleInput}
                                     />
