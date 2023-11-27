@@ -36,7 +36,7 @@ import {
         <MDBContainer>
           <MDBNavbarBrand>
           {isLoggedIn ?(
-            <Link to={"/main-page"} className="text-light"> 
+            <Link to={"/all-plans"} className="text-light"> 
               <Image src="/plantastiknav.png" className="navbar-img" />
             </Link>
           ) : (

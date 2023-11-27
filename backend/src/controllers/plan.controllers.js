@@ -18,6 +18,24 @@ export const searchMyPlans = async (req, res) => {
     );
 };
 
+export const searchAllPlans = async (req, res) => {
+    const id = req.query.id;
+    const connection = await connectDB();
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user`;", [id, id],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+                
+                res.send(result)
+                
+            }
+        }
+    );
+};
+
 //consulta para los detalles de un plan
 export const DetailPlan = async (req, res) => {
     const id = req.query.id;
@@ -104,3 +122,23 @@ export const BeInterested = async (req, res) => {
         }
     );
 };
+
+export const createMyPlan = async (req, res) => {
+    const {name, description, address, avgRating, date, time, state, minPrice, maxPrice, image, id_user} = req.body;
+    const date_time = `${date} ${time}:00`
+    const connection = await connectDB();
+    connection.query("INSERT INTO `plan` (`id_user_plan`, `name`, `description`, `address`, `avg_rating`,`date_time` , `state`, `min_price`, `max_price`, `image`) VALUES (?,?,?,?,?,?,?,?,?,?);",
+    [id_user,name,description,address,avgRating,date_time,state,minPrice,maxPrice,image],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+                res.send(result)
+                
+            }
+        }
+    );
+};
+ 
