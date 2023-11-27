@@ -56,6 +56,94 @@ export const DetailPlan = async (req, res) => {
     );
 };
 
+export const listarData = async (req, res) => {
+    const {idplan} = req.body;
+
+    const connection = await connectDB();
+
+    await connection.query('SELECT `name`, `comment` FROM `user` JOIN  `rating` ON ( id_user  = id_user_rating) AND id_plan_rating = ? ',
+        [idplan],
+        
+        (err,result) =>{
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                
+                connection.end();
+                res.send(result) 
+            }
+        }
+    )
+}
+
+export const updateRating = async(req, res) =>{
+
+    const {idplan}=req.body;
+    const connection = await connectDB();
+
+    await connection.query('UPDATE `plantastik_db`.`plan` SET  `avg_rating` = ( SELECT AVG(`rating`)/5 as promedio FROM `rating` WHERE `id_plan_rating`= ? ) WHERE `id_plan`= ? ', 
+    [idplan,idplan],
+    
+    (err, result) =>{
+
+        if (err) {
+            connection.end();
+            console.log(err);
+        } else {
+            connection.end();
+            return res.json({ message: "succesful_insert" });
+        }
+    }
+    ) 
+}
+
+export const ratingPlan = async(req, res) =>{
+    const {idplan, iduser,rating,comment}=req.body;
+
+    const connection = await connectDB();
+
+    await connection.query('INSERT INTO `plantastik_db`.`rating` (`id_plan_rating`, `id_user_rating`,`rating`,`comment`) VALUES (?,?,?,?)', 
+    [idplan,iduser,rating,comment],
+
+    (err, result)=>{
+        if (err) {
+            connection.end();
+            console.log(err);
+        } else {
+            connection.end();
+            return res.json({ message: "succesful_insert" });
+        }
+    }
+
+    )
+
+}
+
+export const userCommentsValidation = async(req, res) =>{
+    const {idplan, iduser}=req.body;
+
+    const connection = await connectDB();
+
+    await connection.query('SELECT count(`id_user_rating`) as conteo FROM `plantastik_db`.`rating` WHERE `id_plan_rating`= ? AND `id_user_rating`= ? ',
+    [idplan,iduser],
+
+        (err,result) =>
+        {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                
+                connection.end();
+                res.send(result) 
+            }
+        }
+        
+    )
+
+}
+
 //consulta para saber si un usuario esta interesado en un plan
 export const Interested = async (req, res) => {
     const { idplan, iduser } = req.query;
