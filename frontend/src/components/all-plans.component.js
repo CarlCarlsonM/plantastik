@@ -85,6 +85,8 @@ export default function AllPlans() {
                   time={val.Hora}
                   location={val.address}
                   imagen={val.image}
+                  state={val.state}
+                  comentarios={val.NumComentarios}
                 />
               </div>
             );
