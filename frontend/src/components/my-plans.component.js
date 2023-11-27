@@ -87,7 +87,7 @@ export default function MyPlans() {
                   time={val.Hora}
                   location={val.address}
                   imagen={val.image}
-                  
+                  state={val.state}
                 />
                 </div>
               

@@ -40,6 +40,7 @@ export default function MyPlans(props) {
                     <h3 className='TituloPlan'>
                       {props.title}
                     </h3>
+                    <h5 className='TituloPlan'>Estado: {props.state}</h5>
                     <p className='UsuarioPlan'>
                       {props.user}
                     </p>

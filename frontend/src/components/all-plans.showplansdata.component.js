@@ -47,6 +47,7 @@ export default function AllPlans(props) {
             <div className="Contenedor-Plan">
               <div className="Contenido-Plan">
                 <h3 className="TituloPlan">{props.title}</h3>
+                <h5 className="TituloPlan">Estado: {props.state}</h5>
                 <p className="UsuarioPlan">{props.user}</p>
                 <div className="CalificacionPlan">
                   <StarRating rating={Math.round(props.rating * 5)} />
