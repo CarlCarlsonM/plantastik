@@ -253,4 +253,31 @@ export const createMyPlan = async (req, res) => {
     );
 };
  
+export const updateStatePlan = async () => {
+    const connection = await connectDB();
 
+    await connection.query("SELECT * FROM plan",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                result.forEach((row) => {
+                    const fechaPlan = new Date(row.date_time)
+                    const id_plan = row.id_plan
+                    const fecha = new Date();
+                    const state = "Finalizado"
+                    if (fechaPlan < fecha) {
+                        connection.query('UPDATE `plan` SET `state` = ? WHERE `id_plan` = ?',
+                            [state, id_plan],
+                            (err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            }
+                        )
+                    }
+                })
+            }
+        }
+    );
+};
