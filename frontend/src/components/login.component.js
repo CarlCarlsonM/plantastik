@@ -11,7 +11,9 @@ export default function Login()  {
   const {authUser,
     setAuthUser,
     isLoggedIn,
-    setIsLoggedIn} = useAuth(); 
+    setIsLoggedIn,
+    isAdmin, 
+    setIsAdmin} = useAuth(); 
 
   
 
@@ -19,6 +21,7 @@ export default function Login()  {
     password: '',
     email: '',
     login: false,
+    role: '',
     errors: {}
     
   });
@@ -81,20 +84,23 @@ export default function Login()  {
       
 
         if(res.data.message === "Success"){
-          navigate("/user-info");
           setState({
             ...state,
             login: true
           });
-
-          
+          if(res.data.userData.role === 'ADMIN'){
+            setIsAdmin(true)
+            alert("admin")
+            navigate("/admin-options");
+          } else{
+            navigate("/user-info");
+          }
+      
           setIsLoggedIn(true)
           setAuthUser({
             idUser: res.data.userData.id_user,
             name: res.data.userData.name
           })
-
-        
           
         }else{
           alert("no record existed")

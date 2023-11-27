@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../Contexts/AuthContext';
 import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
 
 import {
   MDBContainer,
@@ -19,15 +20,21 @@ import {
 } from "mdb-react-ui-kit";
 
 
- export default function Header() {
+export default function Header() {
   const [showBasic, setShowBasic] = useState(false);
-  
 
-  const {authUser,
-    setAuthUser,
+
+  const { authUser,
     isLoggedIn,
-    setIsLoggedIn} = useAuth();
-  
+    setIsLoggedIn,
+    isAdmin,
+    setIsAdmin } = useAuth();
+
+  const handleLogOut = (event) => {
+    setIsLoggedIn(false)
+    setIsAdmin(false)
+  }
+
   return (
 
     <>
@@ -35,15 +42,15 @@ import {
       <MDBNavbar bgColor="white" expand="lg" fixed="top">
         <MDBContainer>
           <MDBNavbarBrand>
-          {isLoggedIn ?(
-            <Link to={"/all-plans"} className="text-light"> 
-              <Image src="/plantastiknav.png" className="navbar-img" />
-            </Link>
-          ) : (
-            <Link to={"/login"} className="text-light"> 
-              <Image src="/plantastiknav.png" className="navbar-img" />
-            </Link>
-          )}
+            {isLoggedIn ? (
+              <Link to={"/all-plans"} className="text-light">
+                <Image src="/plantastiknav.png" className="navbar-img" />
+              </Link>
+            ) : (
+              <Link to={"/login"} className="text-light">
+                <Image src="/plantastiknav.png" className="navbar-img" />
+              </Link>
+            )}
           </MDBNavbarBrand>
           <MDBNavbarToggler
             aria-controls="navbarSupportedContent"
@@ -64,22 +71,37 @@ import {
                   type="Search"
                 />
                 <MDBBtn outline className="text-light" color="secondary">
-                  <MDBIcon icon="search" color="black"/>
+                  <MDBIcon icon="search" color="black" />
                 </MDBBtn>
               </MDBInputGroup>
             </MDBNavbarNav>
           </MDBCollapse>
-          {isLoggedIn ?(
-            <Link to="/user-info">
-              <MDBContainer className="ms-auto user-info-navbar-container text-white">
-                <img
-                  src={require("../Iconos/usuario.png")} 
-                  alt="The user"
-                  className="generic-user-img me-2"
-                ></img>
-                <span className="NombreUsuarioPerfil">{authUser.name}</span>
-              </MDBContainer>{" "}
-            </Link>
+          {isLoggedIn ? (
+            (isAdmin ? (
+              <><Link to="/admin-options">
+                <MDBContainer className="ms-auto user-info-navbar-container text-white">
+                  <img
+                    src={require("../Iconos/usuario.png")}
+                    alt="The user"
+                    className="generic-user-img me-2"
+                  ></img>
+                  <span className="NombreUsuarioPerfil">{authUser.name}</span>
+                </MDBContainer>{" "}
+              </Link><Button as={Link} to="/login" onClick={handleLogOut}>
+                  Cerrar sesion
+                </Button></>
+            ) : (
+              <><Link to="/user-info">
+                <MDBContainer className="ms-auto user-info-navbar-container text-white">
+                  <img
+                    src={require("../Iconos/usuario.png")}
+                    alt="The user"
+                    className="generic-user-img me-2"
+                  ></img>
+                  <span className="NombreUsuarioPerfil">{authUser.name}</span>
+                </MDBContainer>{" "}
+              </Link></>
+            ))
           ) : (
             <Link to="/login">
               <input
@@ -92,9 +114,6 @@ import {
           )}
         </MDBContainer>
       </MDBNavbar>
-      
-      
-    
     </>
   );
 }
