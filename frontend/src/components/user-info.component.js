@@ -134,7 +134,9 @@ export default function UserInfo() {
             <Button className='LogOutButton' as={Link} to="/login" onClick={handleLogOut}>
               Cerrar sesion
             </Button>
-            
+            <Button className='UserStatistics' as={Link} to="/user-statistics">
+              Estadísticas de Usuarios
+            </Button>
             <Button
               className="RemoveAccountButton"
               onClick={deleteAccount}
