@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { login, register, logout } from "../controllers/auth.controllers.js";
 
+
 import { profile, updateUser, deleteUser, searchMyRole } from "../controllers/user.controllers.js";
-import { searchMyPlans,searchAllPlans, DetailPlan, Interested, NotInterested, BeInterested, createMyPlan, updatePlan } from "../controllers/plan.controllers.js";
+import { searchMyPlans,searchAllPlans, DetailPlan, Interested, NotInterested, BeInterested, createMyPlan, updatePlan,ratingPlan, userCommentsValidation, listarData,updateRating } from "../controllers/plan.controllers.js";
 import {statsgender, statsage} from "../controllers/stats.controllers.js";
 
 import { seeUsers } from "../controllers/admin.controllers.js";
 import { seePlns } from "../controllers/admin.controllers.js";
+
 
 const router = Router();
 
@@ -16,12 +18,9 @@ router.get('/seePlns', seePlns);
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', logout);
-
-
 router.post('/profile', profile);
 router.put('/updateUser', updateUser);
 router.delete('/deleteUser/:id', deleteUser);
-
 router.get('/searchMyPlans', searchMyPlans);
 router.get('/searchAllPlans', searchAllPlans);
 router.get('/DetailPlan', DetailPlan); //Datos del plan en detalle
@@ -30,6 +29,11 @@ router.delete('/NotInterested', NotInterested) //Borrar registro si el usuario n
 router.post('/BeInterested', BeInterested) //agregar registro si el usuario  esta interesado
 router.put('/updatePlan', updatePlan) //Actualizar un plan
 router.post('/createplan', createMyPlan); //crear un plan
+router.post('/ratingPlan',ratingPlan);
+router.post('/userCommentsValidation',userCommentsValidation);
+router.post('/listarData',listarData);
+router.put('/updateRating',updateRating);
+
 
 
 router.get("/statsgender",statsgender);//Buscar Estadisticas por Género

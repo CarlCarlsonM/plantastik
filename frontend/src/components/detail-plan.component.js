@@ -4,9 +4,15 @@ import { useParams } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/Button';
 import '../styles/detailplans.css';
 import { useAuth } from "../Contexts/AuthContext";
 import Axios from "axios";
+import Card from 'react-bootstrap/Card';
+import Swal from 'sweetalert2';
+
+
 
 
 export default function DetailPlan(props) {
@@ -19,6 +25,8 @@ export default function DetailPlan(props) {
         setIsLoggedIn } = useAuth();
 
     const [interested, setInterested] = useState(false)
+
+    const [commentList, setCommentList] = useState([])
     //Datos del plan
     const [state, setState] = useState({
         
@@ -31,11 +39,106 @@ export default function DetailPlan(props) {
         date: "",
         initialPrice: "",
         finalPrice: "",
-        location: ""
+        location: "",
       });
 
+    
+      const [body, setBody] = useState({
+        ratingPlanes : 0,
+        comment: ""
+      });
+
+      const handleInput = (event) => {
+        setBody({
+          ...body,
+          [event.target.name]: event.target.value,
+        });
+      };
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+
+        Axios.post(`http://localhost:3001/userCommentsValidation`,{
+            idplan:state.idplan,
+            iduser:authUser.idUser,
+        }).then((res) =>{
+
+            const count = res.data[0].conteo; 
+            console.log(state.validate);
+            
+            if(count>0){
+                Swal.fire({
+                    title: "<strong>¡Tú ya publicaste un comentario en este plan!</strong>",
+                    html:"<i></i>",
+                    icon:'warning',
+                    timer:3000
+                  })
+            }else{
+                addComment();
+            }
+
+        })
+  
+      };
+
+      const addComment = () =>{
+
+
+        Axios.post(`http://localhost:3001/ratingPlan`,{
+            idplan:state.idplan,
+            iduser:authUser.idUser,
+            rating: body.ratingPlanes,
+            comment:body.comment
+        }).then((res) =>{
+
+            if(res.data.message === "succesful_insert"){
+                Swal.fire({
+                    title: "<strong>¡Comentario exitoso!</strong>",
+                    html:"<i>Tú comentario a sido guarddado con éxito</i>",
+                    icon:'success',
+                    timer:3000
+                  })
+                  listData();
+                  updateRantingPlan();
+            }
+            else{
+                alert("Tuvimos un problema");
+            }
+
+        })
+      };
+
+      const updateRantingPlan = () =>{
+
+        Axios.put(`http://localhost:3001/updateRating`,{
+            idplan: state.idplan,
+            idplan:state.idplan
+        }).then((res) =>{
+
+            if(res.data.message === "succesful_insert"){
+                console.log("Bien");
+            }
+            else{
+                alert("Tuvimos un problema");
+            }
+        })
+
+      }
+
+      const listData = () =>{
+
+        Axios.post(`http://localhost:3001/listarData`,{
+            idplan: state.idplan
+
+        }).then((res)=>{
+
+            setCommentList(res.data);
+        })
+      }
+
       
-        
+
+    
     
     //DEJAR DE ESTAR INTERESADO
     const NotInterested = () => {
@@ -45,6 +148,7 @@ export default function DetailPlan(props) {
             params: {
                 idplan: state.idplan,
                 iduser: authUser.idUser,
+                
             }   
         }).then((res) => {
             
@@ -65,6 +169,7 @@ export default function DetailPlan(props) {
             
                 idplan: state.idplan,
                 iduser: authUser.idUser,
+
                
         }).then((res) => {
             
@@ -78,6 +183,8 @@ export default function DetailPlan(props) {
         });
         
     }
+
+
     const getDetailPlan = (id)=>{
        
         Axios.get("http://localhost:3001/DetailPlan", {
@@ -100,7 +207,9 @@ export default function DetailPlan(props) {
                 location: res.data[0].address
               });
 
+              
               Interested(state.idplan, authUser.idUser);
+              listData();
           });
         }   
     //ver si esta interesado. si si cambiar el icono de interesado
@@ -151,10 +260,13 @@ export default function DetailPlan(props) {
         if (authUser && authUser.idUser) {
         
             getDetailPlan(state.idplan);
+            
+            
         }
     }, [authUser]);
 
-    
+    const ratingPlanes = body.ratingPlanes;
+    const comment = body.comment;
 
     return (
 
@@ -218,6 +330,7 @@ export default function DetailPlan(props) {
                                     <p className='CalificationNumber'>
                                         {state.rating*5}
                                     </p>
+                                    
                                 </div>
                             
                                 <p className='PlanDescription'>
@@ -238,12 +351,67 @@ export default function DetailPlan(props) {
                                     <p className='Location'>
                                         <strong> Ubicacion:</strong> {state.location}
                                     </p>
+                                    
                                 </div>
+                                
                             </div>
+                            
                         </div>
+                        
                     </center>
                 </Row>
+                <Row>
+                <Col md={12}>
+                    <h2>Comentarios</h2>
+                    <Form>
+                        <Form.Group controlId="comment" style={{ marginBottom: '20px' }}>
+                            <Form.Control as="textarea" 
+                            name="comment"
+                            value={comment}
+                            placeholder="Deja tú comentario aquí..."
+                            onChange={handleInput}
+                            rows={3}  />
+                        </Form.Group>
+                <Form.Group controlId="rating" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <div>
+                        <Form.Label style={{ marginRight: '10px' }}><strong>Califica</strong></Form.Label>
+                        <Form.Control as="select" custom style={{ width: '200px' }} 
+                            value={ratingPlanes}
+                            name="ratingPlanes"
+                            onChange={handleInput}>
+
+                            <option value="" disabled selected></option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </Form.Control>
+                    </div>
+                        <Button variant="primary" type="submit" style={{ marginTop: '20px', marginLeft: '20px' }}
+                        onClick={handleSubmit}>
+                            Enviar
+                        </Button>
+                    </Form.Group>
+                    </Form>
+
+                    {commentList.map((comentario) => (
+                        <Card style={{ width: '96%', marginBottom: '10px' }} key={comentario.id}>
+                            <Card.Body>
+                <               Card.Title>{comentario.name}</Card.Title>
+                                    <Card.Text>
+                                        {comentario.comment}
+                                    </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    ))}
+
+                    </Col>
+
+                </Row>
             </Container>
+            
             </Row>
         <Row>
             <Col>
