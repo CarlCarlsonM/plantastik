@@ -2,8 +2,11 @@ import { Router } from "express";
 import { login, register, logout } from "../controllers/auth.controllers.js";
 import { profile, updateUser, deleteUser } from "../controllers/user.controllers.js";
 import { searchMyPlans, DetailPlan, Interested, NotInterested, BeInterested } from "../controllers/plan.controllers.js";
+import { seeUsers } from "../controllers/admin.controllers.js";
 
 const router = Router();
+
+router.get('/seeUsers', seeUsers);
 
 router.post('/register', register);
 router.post('/login', login);

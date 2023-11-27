@@ -18,6 +18,7 @@ import MainPage from "./components/main-page.component";
 import Header from "./components/header.component";
 import Footer from "./components/footer.component";
 import DetailPlan from "./components/detail-plan.component";
+import AdminOptions from "./components/admin-options.component";
 
 
 
@@ -47,6 +48,11 @@ function App() {
             exact
             path="/register"
             element={<Register />}
+            />
+          <Route
+            exact
+            path="/admin-options"
+            element={<AdminOptions />}
           />
           <Route
             exact
@@ -85,6 +91,8 @@ function App() {
             path="/detail-plan/:idplan"
             element={<DetailPlan />}
           />
+
+          
         </Routes>
       </MDBContainer>
 
