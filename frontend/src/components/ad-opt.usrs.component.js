@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import Axios from 'axios';
 import Swal from 'sweetalert2'
 
+// reactstrap
+import PopEdit from './popEditUsr'
 
 //css
 import '../styles/admin-options.css'
@@ -138,15 +140,16 @@ export default function Usrs() {
                       idUser={val.id_user}
                     </Col>
                     <Col>
-                      <ul className='d-flex'>
+                      {/* <ul className='d-flex'>
                         <li className='flex-fill' onClick={() => delUsr(val.id_user)}>Eliminar</li>
-                        {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
+                        <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li>
                         <li className='flex-fill' >
                           <Button className='SmallButton' as={Link} to="/update-personal-data">
                             Editar
-                          </Button>
+                          </Button> 
                         </li>
-                      </ul>
+                      </ul> */}
+                          <PopEdit />
                     </Col>
                   </Row>
 
@@ -168,4 +171,6 @@ export default function Usrs() {
   )
 
 }
+
+
 
