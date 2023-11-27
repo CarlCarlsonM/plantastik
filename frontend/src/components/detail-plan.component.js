@@ -73,6 +73,7 @@ export default function DetailPlan(props) {
                     icon:'warning',
                     timer:3000
                   })
+                  getDetailPlan(state.idplan)
             }else{
                 addComment();
             }
@@ -117,6 +118,7 @@ export default function DetailPlan(props) {
 
             if(res.data.message === "succesful_insert"){
                 console.log("Bien");
+                getDetailPlan(state.idplan)
             }
             else{
                 alert("Tuvimos un problema");
@@ -399,7 +401,7 @@ export default function DetailPlan(props) {
                     {commentList.map((comentario) => (
                         <Card style={{ width: '96%', marginBottom: '10px' }} key={comentario.id}>
                             <Card.Body>
-                <               Card.Title>{comentario.name}</Card.Title>
+                <               Card.Title>{comentario.name} | <strong>{comentario.rating } estrellas</strong>  </Card.Title>
                                     <Card.Text>
                                         {comentario.comment}
                                     </Card.Text>

@@ -80,7 +80,7 @@ export default function AllPlans(props) {
                 </Link>
                 <div className="ComentariosPlan">
                   <p>
-                    <strong>98 Comentarios</strong>
+                    <strong>{props.comentarios} comentarios</strong>
                   </p>
                 </div>
               </div>
