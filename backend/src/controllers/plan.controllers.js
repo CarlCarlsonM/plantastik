@@ -21,7 +21,7 @@ export const searchMyPlans = async (req, res) => {
 export const searchAllPlans = async (req, res) => {
     const id = req.query.id;
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user`;", [id, id],
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -61,7 +61,7 @@ export const listarData = async (req, res) => {
 
     const connection = await connectDB();
 
-    await connection.query('SELECT `name`, `comment` FROM `user` JOIN  `rating` ON ( id_user  = id_user_rating) AND id_plan_rating = ? ',
+    await connection.query('SELECT `name`, `comment`, `rating` FROM `user` JOIN  `rating` ON ( id_user  = id_user_rating) AND id_plan_rating = ? ',
         [idplan],
         
         (err,result) =>{
