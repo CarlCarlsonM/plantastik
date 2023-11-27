@@ -123,6 +123,7 @@ export const BeInterested = async (req, res) => {
     );
 };
 
+
 //Actualizar un plan
 export const updatePlan = async (req, res) => {
     const { name, description, date, time, min_price, max_price, address, id_plan, id_user_plan } = req.body;
@@ -145,4 +146,23 @@ export const updatePlan = async (req, res) => {
     );
 };
 
+export const createMyPlan = async (req, res) => {
+    const {name, description, address, avgRating, date, time, state, minPrice, maxPrice, image, id_user} = req.body;
+    const date_time = `${date} ${time}:00`
+    const connection = await connectDB();
+    connection.query("INSERT INTO `plan` (`id_user_plan`, `name`, `description`, `address`, `avg_rating`,`date_time` , `state`, `min_price`, `max_price`, `image`) VALUES (?,?,?,?,?,?,?,?,?,?);",
+    [id_user,name,description,address,avgRating,date_time,state,minPrice,maxPrice,image],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+                res.send(result)
+                
+            }
+        }
+    );
+};
+ 
 

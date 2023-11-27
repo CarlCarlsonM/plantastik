@@ -1,0 +1,50 @@
+.ContenedorEstadisticasUsuario{
+    margin-top: 25px;
+}
+.Subtitulos{
+    text-align: center;
+    font-weight: normal;
+    margin-top: 10px;
+}
+.Estadisticas{
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    margin: 10px;
+    width: 1000px;
+}
+.ContenedorTorta{
+    display: flex;
+    justify-content: center; /* alineación horizontal */
+    align-items: center; /* alineación vertical */
+    margin-bottom: 10px;
+    width: 400px;
+    height: auto;
+    margin-left: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+.ContenedorTorta:hover{
+    transform: scale(0.95);
+    cursor: pointer;
+}
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+    box-shadow: 2px 2px 2px 2px #888888;
+}
+table{
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+table tr:hover{
+    background-color: #c4c2c2;
+}
+td,th{
+    padding: 8px;
+}
+.ContenedorEstadisticas{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+}

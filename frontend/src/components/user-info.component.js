@@ -134,7 +134,9 @@ export default function UserInfo() {
             <Button className='LogOutButton' as={Link} to="/login" onClick={handleLogOut}>
               Cerrar sesion
             </Button>
-            
+            <Button className='UserStatistics' as={Link} to="/user-statistics">
+              Estadísticas de Usuarios
+            </Button>
             <Button
               className="RemoveAccountButton"
               onClick={deleteAccount}
@@ -142,6 +144,11 @@ export default function UserInfo() {
               <i class="fa-solid fa-pen-nib me-1"></i>
               Eliminar Cuenta
             </Button>
+
+            <Button className='LogOutButton' as={Link} to="/admin-options" >
+              Opciones Adminstrador
+            </Button>
+
           </Row>
         </div>
       </Container>

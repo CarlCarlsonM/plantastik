@@ -17,6 +17,8 @@ import Header from "./components/header.component";
 import Footer from "./components/footer.component";
 import DetailPlan from "./components/detail-plan.component";
 import EditPlan from "./components/edit-plan.component";
+import AdminOptions from "./components/admin-options.component";
+import UserStatistics from "./components/user-statistics.component";
 
 function App() {
   const [showBasic, setShowBasic] = useState(false);
@@ -34,6 +36,7 @@ function App() {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/user-info" element={<UserInfo />} />
             <Route exact path="/create-plan" element={<CreatePlan />} />
+            <Route exact path="/admin-options" element={<AdminOptions />} />
             <Route
               exact
               path="/my-interested-plans"
@@ -49,8 +52,15 @@ function App() {
 
             <Route exact path="/main-page" element={<MainPage />} />
 
+
             <Route exact path="/detail-plan/:idplan" element={<DetailPlan />} />
             <Route exact path="/edit-plan/:idplan" element={<EditPlan />} />
+
+          <Route
+            exact
+            path="/user-statistics"
+            element={<UserStatistics />}
+          />
           </Routes>
         </MDBContainer>
 
