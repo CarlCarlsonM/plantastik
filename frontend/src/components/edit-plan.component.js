@@ -30,6 +30,7 @@ export default function EditPlan(props){
         user: "",
         description:"",
         date: "",
+        time: "",
         initialPrice: "",
         finalPrice: "",
         location: ""
@@ -64,7 +65,8 @@ export default function EditPlan(props){
                 image: res.data[0].image,
                 title: res.data[0].planName,
                 description: res.data[0].description,
-                date: res.data[0].date_time,
+                date: res.data[0].date,
+                time: res.data[0].time,
                 initialPrice: res.data[0].min_price,
                 finalPrice: res.data[0].max_price,
                 location: res.data[0].address
@@ -84,6 +86,7 @@ export default function EditPlan(props){
           name: state.title,
           description: state.description,
           date: state.date,
+          time: state.time,
           min_price: state.initialPrice,
           max_price: state.finalPrice,
           address: state.location,
@@ -109,6 +112,7 @@ export default function EditPlan(props){
     const title = state.title
     const description = state.description
     const date = state.date
+    const time = state.time
     const initialPrice = state.initialPrice
     const finalPrice = state.finalPrice
     const location = state.location
@@ -167,8 +171,18 @@ export default function EditPlan(props){
                                     <FormLabel><strong>Ingresa la fecha:</strong></FormLabel>
                                     <Form.Control
                                         type = "date"
-                                        name = "date_time"
+                                        name = "date"
                                         value = {date}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
+
+                                <FormGroup className="mb-3">
+                                    <FormLabel><strong>Ingresa la hora:</strong></FormLabel>
+                                    <Form.Control
+                                        type = "time"
+                                        name = "time"
+                                        value = {time}
                                         onChange={handleInput}
                                     />
                                 </FormGroup>
@@ -177,7 +191,7 @@ export default function EditPlan(props){
                                     <FormLabel><strong>Precio mínimo:</strong></FormLabel>
                                     <Form.Control
                                         type="number"
-                                        name = "minprice"
+                                        name = "initialPrice"
                                         placeholder= "¿Cuánto es el mínimo de precios (COP)?"
                                         value = {initialPrice}
                                         onChange={handleInput}
@@ -188,7 +202,7 @@ export default function EditPlan(props){
                                     <FormLabel><strong>Precio máximo:</strong></FormLabel>
                                     <Form.Control
                                         type="number"
-                                        name = "maxprice"
+                                        name = "finalPrice"
                                         placeholder="¿Cuánto es el máximo de precios (COP)?"
                                         value = {finalPrice}
                                         onChange={handleInput}

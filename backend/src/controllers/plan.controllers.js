@@ -41,14 +41,14 @@ export const DetailPlan = async (req, res) => {
     const id = req.query.id;
     
     const connection = await connectDB();
-    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS date_time,`min_price`,`max_price`,`address` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
+    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
         (err, result) => {
             
             if (err) {
                 connection.end();
                 console.log(err);
             } else {
-                
+                console.log(result);
                 connection.end();
                 res.send(result) 
             }
@@ -125,14 +125,12 @@ export const BeInterested = async (req, res) => {
 
 //Actualizar un plan
 export const updatePlan = async (req, res) => {
-    console.log("EJECUTA BACKEND")
-    const { name, description, date, min_price, max_price, address, id_plan, id_user_plan } = req.body;
-    console.log(req.body)
-    const date_time = `${date} 00:00:00`
+    const { name, description, date, time, min_price, max_price, address, id_plan, id_user_plan } = req.body;
+    const date_time = `${date} ${time}:00`
     const id_plan_number = Number(id_plan) 
     const connection = await connectDB();
     await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ? AND `id_user_plan` = ?',
-        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number],
+        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number,id_user_plan],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -140,6 +138,7 @@ export const updatePlan = async (req, res) => {
                 return res.json({ message: "Failed" })
             } else {
                 connection.end();
+                console.log(result)
                 return res.json({ message: "Update_Plan" })
             }
         }
