@@ -148,8 +148,15 @@ export default function Usrs() {
                             Editar
                           </Button> 
                         </li>
-                      </ul> */}
-                          <PopEdit />
+                      </ul>
+                      */}
+                      <PopEdit />
+                      <Link to={`/edit-plan/${val.id_user}`}>
+                        <img
+                          src={require("../Iconos/editar.png")}
+                          className="BotonImagen"
+                          style={{ cursor: 'pointer', float: 'left' }} />
+                      </Link>
                     </Col>
                   </Row>
 
