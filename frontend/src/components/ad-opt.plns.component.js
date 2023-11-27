@@ -43,14 +43,25 @@ export default function Plns() {
 
     const seePlns = () => {
 
-        
-        // Axios.get("http://localhost:3001/seePlns", {
-        //     params: {
-        //         // id: id
-        //     }
-        // }).then((response) => {
-        //     setPlns(response.data);
-        //     /*alert("Mostrando Mis Planes");*/
+
+        Axios.get("http://localhost:3001/seePlns", {
+            params: {
+                // id: id
+            }
+        }).then((response) => {
+            setPlns(response.data);
+            /*alert("Mostrando Mis Planes");*/
+        })
+
+    }
+
+    const delPln = (i) => {
+        const id = i;
+
+        // Axios.delete(`http://localhost:3001/deleteUser/${id}`
+        // ).then((response) => {
+        //   setUsers(response.data);
+        //   /*alert("Mostrando users");*/
         // })
 
     }
@@ -109,9 +120,32 @@ export default function Plns() {
                     {
                         UsersList.map((val, key) => {
                             return (
-                                <div key={val.id_plan}>
+                                // <div key={val.id_plan}>
 
-                                    nombrePlan = {val.name}
+                                //     nombrePlan = {val.name}
+
+                                // </div>
+                                <div key={val.id_plan}>
+                                    <Row>
+                                        <Col>
+                                            nombrePlan = {val.name}
+                                        </Col>
+                                        <Col>
+                                            idPlan={val.id_plan}
+                                        </Col>
+                                        <Col>
+                                            <ul className='d-flex'>
+                                                <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li>
+                                                {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
+                                                <li className='flex-fill' >
+                                                    <Button className='SmallButton'>
+                                                        {/* <Button className='SmallButton' as={Link} to="/update-personal-data"> */}
+                                                        Editar
+                                                    </Button>
+                                                </li>
+                                            </ul>
+                                        </Col>
+                                    </Row>
 
                                 </div>
 
