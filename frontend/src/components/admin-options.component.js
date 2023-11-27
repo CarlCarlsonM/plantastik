@@ -19,6 +19,7 @@ import Plns from "./ad-opt.plns.component";
 //css
 import '../styles/admin-options.css'
 import '../styles/user-info.css';
+import Col from "react-bootstrap/esm/Col";
 
 export default function AdminOptions() {
 
@@ -102,13 +103,13 @@ export default function AdminOptions() {
         <div className='user-info-container'>
           <Row>
             <div className='d-flex align-items-center justify-content-center'>
-              <div className='col-6 tab p-5'>
+              <div className='col-10 tab p-5'>
                 <ul className='d-flex'>
                   <li className='flex-fill' onClick={() => updateToggle(1)}>Ver Usuarios</li>
                   <li className='flex-fill' onClick={() => updateToggle(2)}>Ver Planes</li>
-                  <li className='flex-fill' onClick={() => updateToggle(3)}>Editar Planes</li>
-                  <li className='flex-fill' onClick={() => updateToggle(4)}>editar Usuarios</li>
-                  <li className='flex-fill' onClick={() => updateToggle(5)}>estadísticas</li>
+                  {/* <li className='flex-fill' onClick={() => updateToggle(3)}>Editar Planes</li>
+                  <li className='flex-fill' onClick={() => updateToggle(4)}>editar Usuarios</li> */}
+                  <li className='flex-fill' onClick={() => updateToggle(5)}>Estadísticas</li>
                 </ul>
                 <div className={toggle === 1 ? "show-content" : "content"}>
                   <Usrs />
@@ -116,18 +117,24 @@ export default function AdminOptions() {
                 <div className={toggle === 2 ? "show-content" : "content"}>
                   <Plns />
                 </div>
-                <div className={toggle === 3 ? "show-content" : "content"}>
+                {/* <div className={toggle === 3 ? "show-content" : "content"}>
                   <h1>Editar Planes</h1>
                   <p>aqui van todos los planes que se van a editar</p>
                 </div>
                 <div className={toggle === 4 ? "show-content" : "content"}>
                   <h1>Editar Usuarios</h1>
                   <p>aqui van todos los Usurios que se van que se van a editar</p>
-                </div>
+                </div> */}
                 <div className={toggle === 5 ? "show-content" : "content"}>
+                  <Row>
+                    <Col>
+                    </Col>
                   <Button className='UserStatistics' as={Link} to="/user-statistics">
                     Estadísticas de Usuarios
                   </Button>
+                  </Row>
+                    <Col>
+                    </Col>
                 </div>
               </div>
             </div>
