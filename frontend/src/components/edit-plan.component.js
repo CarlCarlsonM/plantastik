@@ -5,26 +5,27 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import '../styles/detailplans.css';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { useAuth } from "../Contexts/AuthContext";
+import { useNavigate  } from "react-router-dom";
 import Axios from "axios";
+import FormGroup from "react-bootstrap/esm/FormGroup";
+import FormLabel from "react-bootstrap/esm/FormLabel";
+import Swal from 'sweetalert2'
 
 
-export default function EditPlan(props) {
+export default function EditPlan(props){
 
-    const { idplan } = useParams(); // Get the post id from the URL
+    const { idplan } = useParams();// Get the post id from the URL
     //id del usuario logueado
-    const { authUser,
-        setAuthUser,
-        isLoggedIn,
-        setIsLoggedIn } = useAuth();
+    const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
 
-    const [interested, setInterested] = useState(false)
     //Datos del plan
     const [state, setState] = useState({
         
         idplan: idplan, //cambiar esto por el parametro que reciba de la pagina principal y sale con props.id
         image: "",
-        rating: 0,
         title: "",
         user: "",
         description:"",
@@ -33,51 +34,20 @@ export default function EditPlan(props) {
         finalPrice: "",
         location: ""
       });
-
-      
-        
     
-    //DEJAR DE ESTAR INTERESADO
-    const NotInterested = () => {
+    const navigate = useNavigate();
 
-        //borrar registro
-        Axios.delete(`http://localhost:3001/NotInterested`,{
-            params: {
-                idplan: state.idplan,
-                iduser: authUser.idUser,
-            }   
-        }).then((res) => {
-            
-          if (res.data.message === "succesful_delete") {
-            //alert("User successfully delete");
-            setInterested(false);
-          }
-          else {
-            alert("Could not delete register")
-          }
-        }); 
-    }
-    //INTERESARSE EN EL PLAN
-    const BeInterested = () => {
-        //agregar registro
-        
-        Axios.post(`http://localhost:3001/BeInterested`,{
-            
-                idplan: state.idplan,
-                iduser: authUser.idUser,
-               
-        }).then((res) => {
-            
-          if (res.data.message === "succesful_add") {
-            //alert("User successfully delete");
-            setInterested(true);
-          }
-          else {
-            alert("not added as interested");
-          }
+    const handleInput =(event)=>{
+        setState({
+          ...state,
+          [event.target.name]: event.target.value,
         });
-        
-    }
+    };
+
+    const handleSubmit =(event)=>{
+        event.preventDefault();
+    };
+
     const getDetailPlan = (id)=>{
        
         Axios.get("http://localhost:3001/DetailPlan", {
@@ -90,72 +60,29 @@ export default function EditPlan(props) {
             setState({
                 ...state,
                 image: res.data[0].image,
-                rating:res.data[0].avg_rating,
                 title: res.data[0].planName,
-                user: res.data[0].name,
                 description: res.data[0].description,
                 date: res.data[0].date_time,
                 initialPrice: res.data[0].min_price,
                 finalPrice: res.data[0].max_price,
                 location: res.data[0].address
               });
-
-              Interested(state.idplan, authUser.idUser);
           });
-        }   
-    //ver si esta interesado. si si cambiar el icono de interesado
-    const Interested = (idplan,iduser)=>{
-        
-        Axios.get("http://localhost:3001/Interested", {
-            params: {
-                idplan: idplan,
-                iduser: iduser,
-            }
-
-            }).then((res) => {
-                
-                
-                if(res.data.message === "Interested"){
-                    
-                    setInterested(true);
-                } else {
-                    
-                    setInterested(false);
-                  }
-
-            });
         }
-
-    const StarRating = ({rating}) => {
-        // Limita la calificación a un máximo de 5
-        rating = Math.min(rating, 5);
-        
-        const stars = [];
-        for (let i = 0; i < 5; i++) {
-          let starClass = 'star';
-          if (rating > i) {
-            starClass += ' rated';
-            if (rating < i+1) {
-              starClass += ' partial';
-              const percentage = ((rating - i) * 100).toFixed(1);
-              stars.push(<span key={i} className={starClass} style={{'--fill': `${percentage}%`}}>★</span>);
-              continue;
-            }
-          }
-          stars.push(<span key={i} className={starClass}>★</span>);
-        }
-        return <div>{stars}</div>;
-      };
     
     useEffect(() => {
         if (authUser && authUser.idUser) {
-        
             getDetailPlan(state.idplan);
         }
     }, [authUser]);
 
     
-
+    const title = state.title
+    const description = state.description
+    const date_time = state.date
+    const min_val = state.initialPrice
+    const max_val = state.finalPrice
+    const location = state.location
     return (
 
       <>
@@ -166,15 +93,13 @@ export default function EditPlan(props) {
 
             <center>
               <h1 className='Titulos'>
-                Detalle del plan
+                Editar el plan
               </h1>
             </center>
 
             <Container fluid className="ContainerDetail">
                 <Row>
-                    <center>
-
-                        
+                    <center> 
                         <div className="ContainerDetailPlan2">
 
                         {state.image && (
@@ -186,71 +111,80 @@ export default function EditPlan(props) {
                         )}
 
                             <div className="InfoPlan">
+                                <FormGroup className="mb-2 col-md-6" controlId="formBasicEmail">
+                                    <FormLabel className="user-name"><strong>Título del plan:</strong></FormLabel>
+                                    <Form.Control
+                                        type="text"
+                                        name="title"
+                                        placeholder="Ingresa el título"
+                                        value={title}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
 
-                            
+                                <FormGroup className="mb-3">
+                                    <FormLabel className="user-name"><strong>Descripción:</strong></FormLabel>
+                                    <Form.Control
+                                        as = "textarea"
+                                        rows = {5}
+                                        name="title"
+                                        placeholder="Ingresa el título"
+                                        value={description}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
 
-                        
-                                {interested ?(
-                                            <img 
-                                            src={require("../Iconos/interested.png")} 
-                                            className="BotonImagen" 
-                                            onClick={NotInterested}
-                                            style={{cursor: 'pointer', float:'right'}}/>
-                                        ) : (
-                                                <img 
-                                            src={require("../Iconos/notinterested.png")} 
-                                            className="BotonImagen" 
-                                            onClick={BeInterested}
-                                            style={{cursor: 'pointer', float:'right'}}/>
-                                            
-                                        )}
-                            
-                                <h3 className='PlanTitle'>
-                                    {state.title}
-                                </h3>
+                                <FormGroup className="mb-3">
+                                    <FormLabel className="user-name"><strong>Ingresa la fecha:</strong></FormLabel>
+                                    <Form.Control
+                                        type = "date"
+                                        value = {date_time}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
 
-                                <p className='PlanUser'>
-                                <strong>Creado por: </strong>{state.user}
-                                </p>
+                                <FormGroup className="mb-3">
+                                    <FormLabel className="user-name"><strong>Precio mínimo:</strong></FormLabel>
+                                    <Form.Control
+                                        type="number"
+                                        value = {min_val}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
 
-                                <div className='PlanStars'>
-                                    <StarRating rating={Math.round(state.rating*5)} />
-                                    <p className='CalificationNumber'>
-                                        {state.rating*5}
-                                    </p>
-                                </div>
-                            
-                                <p className='PlanDescription'>
-                                    {state.description}
-                                </p>
+                                <FormGroup className="mb-3">
+                                    <FormLabel className="user-name"><strong>Precio máximo:</strong></FormLabel>
+                                    <Form.Control
+                                        type="number"
+                                        value = {max_val}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
 
-                                <div className="PlanSpecificData">
-                                    <p className='Date'>
-                                        <strong> Fecha:</strong> {state.date}
-                                    </p>
-                                    <p className='StartTime'>
-                                        <strong> Precio minimo:</strong> {state.initialPrice}
-                                    </p>
-                                    <p className='EndTime'>
-                                        <strong> Precio maximo:</strong> {state.finalPrice}
-                                    </p>
-
-                                    <p className='Location'>
-                                        <strong> Ubicacion:</strong> {state.location}
-                                    </p>
-                                </div>
+                                <FormGroup className="mb-3">
+                                    <FormLabel className="user-name"><strong>Ubicación:</strong></FormLabel>
+                                    <Form.Control
+                                        type="text"
+                                        value = {location}
+                                        onChange={handleInput}
+                                    />
+                                </FormGroup>
                             </div>
                         </div>
                     </center>
                 </Row>
+
+                <Row className="ButtonsRow">
+                    <Button
+                        className="RemoveAccountButton"
+                        onClick={handleSubmit}
+                        >
+                        <i class="fa-solid fa-pen-nib me-1"></i>
+                        Actualizar el plan
+                    </Button>
+                </Row>
             </Container>
             </Row>
-        <Row>
-            <Col>
-            
-            </Col>
-        </Row>
-          
         </Container>
       </>
     )
