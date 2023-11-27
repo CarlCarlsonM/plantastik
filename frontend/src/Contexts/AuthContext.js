@@ -11,6 +11,7 @@ export function AuthProvider(props){
 
     const [authUser, setAuthUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
 
 
     
@@ -20,7 +21,9 @@ export function AuthProvider(props){
         authUser,
         setAuthUser,
         isLoggedIn,
-        setIsLoggedIn
+        setIsLoggedIn,
+        isAdmin,
+        setIsAdmin
     }
 
     return(
@@ -28,4 +31,3 @@ export function AuthProvider(props){
     )
 
 }
-
