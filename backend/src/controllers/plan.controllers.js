@@ -2,6 +2,7 @@ import { connectDB } from "../db.js";
 
 export const searchMyPlans = async (req, res) => {
     const id = req.query.id;
+    updateStatePlan()
     const connection = await connectDB();
     connection.query("SELECT `plan`.`id_plan`,`plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id],
         (err, result) => {
@@ -20,6 +21,7 @@ export const searchMyPlans = async (req, res) => {
 
 export const searchAllPlans = async (req, res) => {
     const id = req.query.id;
+    updateStatePlan()
     const connection = await connectDB();
     connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
         (err, result) => {
@@ -39,7 +41,7 @@ export const searchAllPlans = async (req, res) => {
 //consulta para los detalles de un plan
 export const DetailPlan = async (req, res) => {
     const id = req.query.id;
-    
+    updateStatePlan()
     const connection = await connectDB();
     connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
         (err, result) => {
@@ -147,7 +149,7 @@ export const userCommentsValidation = async(req, res) =>{
 //consulta para saber si un usuario esta interesado en un plan
 export const Interested = async (req, res) => {
     const { idplan, iduser } = req.query;
-    
+    updateStatePlan()
 
     const connection = await connectDB();
 
@@ -196,7 +198,7 @@ export const NotInterested = async (req, res) => {
 
 export const BeInterested = async (req, res) => {
     const { idplan, iduser } = req.body;
-    
+
     const connection = await connectDB();
     await connection.query('INSERT INTO `plantastik_db`.`user_has_plans` (`id_user_uhp`, `id_plan_uhp`) VALUES (?,?)', [iduser,idplan],
         (err, result) => {
