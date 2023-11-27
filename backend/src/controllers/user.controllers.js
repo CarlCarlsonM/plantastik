@@ -53,3 +53,20 @@ export const deleteUser = async (req, res) => {
         }
     );
 };
+
+
+export const searchMyRole = async (req, res) => {
+    const id = req.query.id;
+    const connection = await connectDB();
+    connection.query("SELECT role from user where id_user=?;", [id],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                alert("EL usuario No Se encuentra Loggeado");
+            } else {
+                connection.end();
+                res.send(result)
+            }
+        }
+    );
+};
