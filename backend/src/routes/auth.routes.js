@@ -5,8 +5,11 @@ import { profile, updateUser, deleteUser, searchMyRole } from "../controllers/us
 import { searchMyPlans,searchAllPlans, DetailPlan, Interested, NotInterested, BeInterested, createMyPlan } from "../controllers/plan.controllers.js";
 import {statsgender, statsage} from "../controllers/stats.controllers.js";
 
+import { seeUsers } from "../controllers/admin.controllers.js";
 
 const router = Router();
+
+router.get('/seeUsers', seeUsers);
 
 router.post('/register', register);
 router.post('/login', login);

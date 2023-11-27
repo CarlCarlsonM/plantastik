@@ -16,6 +16,7 @@ import MainPage from "./components/main-page.component";
 import Header from "./components/header.component";
 import Footer from "./components/footer.component";
 import DetailPlan from "./components/detail-plan.component";
+import AdminOptions from "./components/admin-options.component";
 import UserStatistics from "./components/user-statistics.component";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/user-info" element={<UserInfo />} />
             <Route exact path="/create-plan" element={<CreatePlan />} />
+            <Route exact path="/admin-options" element={<AdminOptions />} />
             <Route
               exact
               path="/my-interested-plans"

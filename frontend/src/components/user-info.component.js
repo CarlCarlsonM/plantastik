@@ -144,6 +144,11 @@ export default function UserInfo() {
               <i class="fa-solid fa-pen-nib me-1"></i>
               Eliminar Cuenta
             </Button>
+
+            <Button className='LogOutButton' as={Link} to="/admin-options" >
+              Opciones Adminstrador
+            </Button>
+
           </Row>
         </div>
       </Container>
