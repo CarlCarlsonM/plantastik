@@ -173,7 +173,7 @@ export default function EditPlan(props){
                                     />
                                 </FormGroup>
 
-                                <FormGroup className="mb-3">
+                                <FormGroup className="mb-3" >
                                     <FormLabel><strong>Precio mínimo:</strong></FormLabel>
                                     <Form.Control
                                         type="number"

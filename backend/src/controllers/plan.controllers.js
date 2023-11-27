@@ -10,7 +10,7 @@ export const searchMyPlans = async (req, res) => {
                 console.log(err);
             } else {
                 connection.end();
-                
+
                 res.send(result)
                 
             }
@@ -127,12 +127,16 @@ export const BeInterested = async (req, res) => {
 export const updatePlan = async (req, res) => {
     console.log("EJECUTA BACKEND")
     const { name, description, date, min_price, max_price, address, id_plan, id_user_plan } = req.body;
+    console.log(req.body)
+    const date_time = `${date} 00:00:00`
+    const id_plan_number = Number(id_plan) 
     const connection = await connectDB();
     await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ? AND `id_user_plan` = ?',
-        [name, description, date, min_price, max_price, address,id_plan, id_user_plan],
+        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number],
         (err, result) => {
             if (err) {
                 connection.end();
+                console.log("error");
                 return res.json({ message: "Failed" })
             } else {
                 connection.end();
