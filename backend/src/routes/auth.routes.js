@@ -6,10 +6,12 @@ import { searchMyPlans,searchAllPlans, DetailPlan, Interested, NotInterested, Be
 import {statsgender, statsage} from "../controllers/stats.controllers.js";
 
 import { seeUsers } from "../controllers/admin.controllers.js";
+import { seePlns } from "../controllers/admin.controllers.js";
 
 const router = Router();
 
 router.get('/seeUsers', seeUsers);
+router.get('/seePlns', seePlns);
 
 router.post('/register', register);
 router.post('/login', login);

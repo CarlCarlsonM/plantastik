@@ -44,14 +44,14 @@ export default function Plns() {
     const seePlns = () => {
 
         
-        // Axios.get("http://localhost:3001/seePlns", {
-        //     params: {
-        //         // id: id
-        //     }
-        // }).then((response) => {
-        //     setPlns(response.data);
-        //     /*alert("Mostrando Mis Planes");*/
-        // })
+        Axios.get("http://localhost:3001/seePlns", {
+            params: {
+                // id: id
+            }
+        }).then((response) => {
+            setPlns(response.data);
+            /*alert("Mostrando Mis Planes");*/
+        })
 
     }
 

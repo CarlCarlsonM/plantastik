@@ -16,7 +16,6 @@ import '../styles/admin-options.css'
 import '../styles/user-info.css';
 
 export default function Usrs() {
-    console.log('Usersasdfa')
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -42,8 +41,6 @@ export default function Usrs() {
     }
 
     const SeeUsers = () => {
-
-        console.log('seeUsersin');
         const id = authUser.idUser;
 
         Axios.get("http://localhost:3001/seeUsers", {
