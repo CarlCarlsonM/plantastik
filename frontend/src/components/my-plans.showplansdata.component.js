@@ -29,12 +29,6 @@ export default function MyPlans(props) {
       return <div>{stars}</div>;
     };
     
-
-    
-    const handleClick1 = () => {
-      alert('Editar el Plan');
-    };
-    
     //pagina en blanco, por ahora
     return (
       <>
@@ -69,18 +63,21 @@ export default function MyPlans(props) {
                             <strong>Ubicación: </strong>{props.location}
                           </p>
                     </div>
-                    <img 
-                      src={require("../Iconos/editar.png")} 
-                      className="BotonImagen" 
-                      onClick={handleClick1} 
-                      style={{cursor: 'pointer', float:'left'}}/>
+
+                    <Link to={`/edit-plan/${props.id_plan}`}>
+                      <img 
+                        src={require("../Iconos/editar.png")} 
+                        className="BotonImagen" 
+                        style={{cursor: 'pointer', float:'left'}}/>
+                    </Link>
+
                     <Link to={`/detail-plan/${props.id_plan}`}>
                       <img 
                         src={require("../Iconos/lupa.png")} 
                         className="BotonImagen" 
-                         
                         style={{cursor: 'pointer', float:'center'}}/>
                     </Link>
+
                     <div className='ComentariosPlan'>
                           <p>
                             <strong>98 Comentarios</strong>
