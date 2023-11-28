@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useAuth } from "../Contexts/AuthContext";
 import { Link } from "react-router-dom";
-import '../styles/myintplans.css';
+import '../styles/myplans.css';
 export default function MyPlans(props) {
     
   
