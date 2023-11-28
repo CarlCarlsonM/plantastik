@@ -100,8 +100,6 @@ export default function Usrs() {
     setToggle(id)
   }
 
-  
-
   return (
     <>
       <Container fluid className='ContenedorMisPlanes'>
