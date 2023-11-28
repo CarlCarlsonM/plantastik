@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import { useAuth } from "../Contexts/AuthContext";
 import { Link } from "react-router-dom";
 import '../styles/myintplans.css';
-export default function MyPlans(props) {
+export default function MyInterestedPlans(props) {
     
   
     const StarRating = ({rating}) => {

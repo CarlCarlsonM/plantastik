@@ -131,7 +131,15 @@ export default function CreatePlan() {
                     <option value="AVION">Avion</option>
                     <option value="BAR">Bar</option>
                     <option value="FUTBOL">Fútbol</option>
-                    <option value="VIDEOJUEGOS">Videojuegos</option>  
+                    <option value="VIDEOJUEGOS">Videojuegos</option>
+                    <option value="BALONCESTO">Baloncesto</option>
+                    <option value="BILLAR">Billar</option>  
+                    <option value="POKER">Poker</option>  
+                    <option value="PELICULA">Pelicula</option>
+                    <option value="DISCOTECA">Discoteca</option>      
+                    <option value="JMESA">Juegos de Mesa</option>    
+                    <option value="CONCIERTO">Concierto</option>  
+                    <option value="LECTURA">Lectura</option>  
                   </Form.Select>  
                   {state.errors.image && <span className="text-danger">{state.errors.image}</span>}
                 </Form.Group>

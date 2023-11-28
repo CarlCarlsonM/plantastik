@@ -306,3 +306,23 @@ export const updateStatePlan = async () => {
         }
     );
 };
+
+
+export const searchMyInterestedPlans = async (req, res) => {
+    const id = req.query.id;
+    updateStatePlan()
+    const connection = await connectDB();
+    connection.query("SELECT `plan`.`id_plan`,`user`.`name`,`plan`.`name` AS `NombrePlan`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM (plan INNER JOIN user_has_plans ON plan.id_plan=user_has_plans.id_plan_uhp) INNER JOIN `user` ON id_user=id_user_plan WHERE id_user_uhp=?;", [id],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+
+                res.send(result)
+                
+            }
+        }
+    );
+};
