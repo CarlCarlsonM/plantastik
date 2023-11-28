@@ -19,6 +19,8 @@ import DetailPlan from "./components/detail-plan.component";
 import EditPlan from "./components/edit-plan.component";
 import AdminOptions from "./components/admin-options.component";
 import UserStatistics from "./components/user-statistics.component";
+import AdUpdUsr from "./components/ad-upd-usr.component";
+import AdmUpdPln from "./components/ad-upd-pln.component";
 
 function App() {
   const [showBasic, setShowBasic] = useState(false);
@@ -55,6 +57,10 @@ function App() {
 
             <Route exact path="/detail-plan/:idplan" element={<DetailPlan />} />
             <Route exact path="/edit-plan/:idplan" element={<EditPlan />} />
+
+            <Route exact path="/ad-upd-usr/:idusr" element={<AdUpdUsr />} />
+            <Route exact path="/ad-upd-pln/:idPln" element={<AdmUpdPln />} />
+
 
           <Route
             exact
