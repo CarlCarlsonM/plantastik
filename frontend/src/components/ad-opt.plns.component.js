@@ -15,7 +15,7 @@ import Swal from 'sweetalert2'
 import '../styles/admin-options.css'
 import '../styles/user-info.css';
 
-export default function Plns() {
+export default function AdmUpdPln() {
 
     const [state, setState] = useState({
         name: '',
@@ -136,7 +136,7 @@ export default function Plns() {
                                         <Col>
                                             <ul className='d-flex'>
                                                 {/* <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li> */}
-                                                <Link to={`/edit-plan/${val.id_plan}`}>
+                                                <Link to={`/ad-upd-pln/${val.id_plan}`}>
                                                     <img
                                                         src={require("../Iconos/editar.png")}
                                                         className="BotonImagen"

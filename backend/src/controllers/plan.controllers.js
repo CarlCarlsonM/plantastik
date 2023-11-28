@@ -236,6 +236,29 @@ export const updatePlan = async (req, res) => {
     );
 };
 
+//Actualizar un plan desde el administrador
+export const updatePlanAdm = async (req, res) => {
+    const { name, description, date, time, min_price, max_price, address, id_plan } = req.body;
+    const date_time = `${date} ${time}:00`
+    const id_plan_number = Number(id_plan) 
+    const connection = await connectDB();
+    await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ?',
+        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log("error");
+                return res.json({ message: "Failed" })
+            } else {
+                connection.end();
+                console.log(result)
+                return res.json({ message: "Update_Plan" })
+            }
+        }
+    );
+};
+
+
 export const createMyPlan = async (req, res) => {
     const {name, description, address, avgRating, date, time, state, minPrice, maxPrice, image, id_user} = req.body;
     const date_time = `${date} ${time}:00`
