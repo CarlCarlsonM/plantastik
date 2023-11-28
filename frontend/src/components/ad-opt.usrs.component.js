@@ -139,13 +139,13 @@ export default function Usrs() {
                     </Col>
                     <Col>
                       <ul className='d-flex'>
-                        <li className='flex-fill' onClick={() => delUsr(val.id_user)}>Eliminar</li>
-                        {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
-                        <li className='flex-fill' >
-                          <Button className='SmallButton' as={Link} to="/update-personal-data">
-                            Editar
-                          </Button>
-                        </li>
+                        {/* <li className='flex-fill' onClick={() => delUsr(val.id_user)}>Eliminar</li> */}
+                        <Link to={`/ad-upd-usr/${val.id_user}`}>
+                          <img
+                            src={require("../Iconos/editar.png")}
+                            className="BotonImagen"
+                            style={{ cursor: 'pointer', float: 'left' }} />
+                        </Link>
                       </ul>
                     </Col>
                   </Row>

@@ -135,14 +135,13 @@ export default function Plns() {
                                         </Col>
                                         <Col>
                                             <ul className='d-flex'>
-                                                <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li>
-                                                {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
-                                                <li className='flex-fill' >
-                                                    <Button className='SmallButton'>
-                                                        {/* <Button className='SmallButton' as={Link} to="/update-personal-data"> */}
-                                                        Editar
-                                                    </Button>
-                                                </li>
+                                                {/* <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li> */}
+                                                <Link to={`/edit-plan/${val.id_plan}`}>
+                                                    <img
+                                                        src={require("../Iconos/editar.png")}
+                                                        className="BotonImagen"
+                                                        style={{ cursor: 'pointer', float: 'left' }} />
+                                                </Link>
                                             </ul>
                                         </Col>
                                     </Row>
