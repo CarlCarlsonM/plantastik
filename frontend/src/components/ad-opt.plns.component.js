@@ -124,15 +124,13 @@ export default function AdmUpdPln() {
 
                                 //     nombrePlan = {val.name}
 
-                                // </div>
+                                // </div>a
                                 <div key={val.id_plan}>
                                     <Row>
-                                        <Col>
-                                            nombrePlan = {val.name}
-                                        </Col>
-                                        <Col>
-                                            idPlan={val.id_plan}
-                                        </Col>
+                                        <Col>nombrePlan = {val.name}</Col>
+                                        <Col>idPlan={val.id_plan}</Col>
+                                        <Col>idUsuario={val.id_user_plan}</Col>
+                                        <Col>estado={val.state}</Col>
                                         <Col>
                                             <ul className='d-flex'>
                                                 {/* <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li> */}
@@ -147,7 +145,7 @@ export default function AdmUpdPln() {
                                     </Row>
 
                                 </div>
-
+                                
                             )
                         })
                     }
