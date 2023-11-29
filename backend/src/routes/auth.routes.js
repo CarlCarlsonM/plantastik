@@ -33,6 +33,7 @@ router.post('/ratingPlan',ratingPlan);
 router.post('/userCommentsValidation',userCommentsValidation);
 router.post('/listarData',listarData);
 router.put('/updateRating',updateRating);
+router.get("/searchPlanByName", searchPlanByName);
 
 router.get("/statsgender",statsgender);//Buscar Estadisticas por Género
 router.get("/statsage",statsage);//Buscar Estadísticas por Edad
