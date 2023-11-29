@@ -73,6 +73,7 @@ export default function AllPlans() {
             }
           }, [authUser])}
           {AllPlansList.map((val, key) => {
+            
             return (
               <div key={val.id_plan}>
                 <PlansAll

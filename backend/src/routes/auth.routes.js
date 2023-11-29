@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { login, register, logout } from "../controllers/auth.controllers.js";
 
-
 import { profile, updateUser, deleteUser, searchMyRole } from "../controllers/user.controllers.js";
-import { searchMyPlans,searchAllPlans,searchMyInterestedPlans, DetailPlan, Interested, NotInterested, BeInterested, createMyPlan, updatePlan, updatePlanAdm,ratingPlan, userCommentsValidation, listarData,updateRating } from "../controllers/plan.controllers.js";
+import { searchMyPlans,searchAllPlans,searchMyInterestedPlans, DetailPlan, Interested, NotInterested, BeInterested, createMyPlan, updatePlan, updatePlanAdm,ratingPlan, userCommentsValidation, listarData, updateRating, searchPlanByName } from "../controllers/plan.controllers.js";
 import {statsgender, statsage} from "../controllers/stats.controllers.js";
 
 import { seeUsers } from "../controllers/admin.controllers.js";
 import { seePlns } from "../controllers/admin.controllers.js";
-
 
 const router = Router();
 
@@ -23,6 +21,7 @@ router.put('/updateUser', updateUser);
 router.delete('/deleteUser/:id', deleteUser);
 router.get('/searchMyPlans', searchMyPlans);
 router.get('/searchAllPlans', searchAllPlans);
+router.delete("/deleteUser/:id", deleteUser);
 router.get('/DetailPlan', DetailPlan); //Datos del plan en detalle
 router.get('/Interested', Interested); //Mirar si el usuario esta interesando en un plan
 router.delete('/NotInterested', NotInterested) //Borrar registro si el usuario no esta interesado
@@ -35,12 +34,9 @@ router.post('/userCommentsValidation',userCommentsValidation);
 router.post('/listarData',listarData);
 router.put('/updateRating',updateRating);
 
-
-
 router.get("/statsgender",statsgender);//Buscar Estadisticas por Género
 router.get("/statsage",statsage);//Buscar Estadísticas por Edad
 router.get("/searchMyRole", searchMyRole);//Buscar el Rol de Un usuario Loggeado
-
 
 router.get("/searchMyInterestedPlans",searchMyInterestedPlans); //Buscar los Planes que el usuario tiene marcados como me interesan
 
