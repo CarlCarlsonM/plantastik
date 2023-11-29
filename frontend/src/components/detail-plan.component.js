@@ -65,9 +65,10 @@ export default function DetailPlan(props) {
           icon: "warning",
           timer: 3000,
         });
-        getDetailPlan(state.idplan);
+        
       } else {
         addComment();
+        getDetailPlan(state.idplan);
       }
     });
   };
