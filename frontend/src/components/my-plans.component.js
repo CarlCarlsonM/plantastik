@@ -88,6 +88,7 @@ export default function MyPlans() {
                   location={val.address}
                   imagen={val.image}
                   state={val.state}
+                  comment={val.NumComentarios}
                 />
                 </div>
               

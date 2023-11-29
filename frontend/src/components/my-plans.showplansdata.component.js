@@ -83,7 +83,7 @@ export default function MyPlans(props) {
 
                     <div className='ComentariosPlan'>
                           <p>
-                            <strong>98 Comentarios</strong>
+                            <strong>{props.comment} Comentarios</strong>
                           </p>
                     </div>
                   </div>
