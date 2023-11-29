@@ -3,11 +3,12 @@ import Row from "react-bootstrap/Row";
 import { useAuth } from "../Contexts/AuthContext.js";
 import "../styles/myplans.css";
 import React, { useEffect, useState, Component } from "react";
-import PlansAll from "./all-plans.showplansdata.component.js";
+import PlanByName from "./plan-by-name.showplansdata.component.js";
 import Axios from "axios";
+import { useLocation } from "react-router-dom";
 
-export default function AllPlans() {
-  const [AllPlansList, setPlans] = useState([]);
+export default function SearchPlanByName() {
+  const [PlansByName, setPlans] = useState([]);
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
 
   const [state, setState] = useState({
@@ -17,18 +18,22 @@ export default function AllPlans() {
     errors: {},
   });
 
-  const getAllPlans = (id) => {
-    Axios.get("http://localhost:3001/searchAllPlans", {
+  const location = useLocation();
+    const name = location.pathname.split('/')[2]
+
+    console.log('idFromPath:',location.pathname.split('/')[2]);
+    console.log('idFromObjct:',name);
+
+  const getPlanByName = () => {
+    Axios.get(`http://localhost:3001/searchPlanByName`, {
       params: {
-        id: id,
+        name: "Plan 1"
       },
     }).then((response) => {
+        console.log(response.data);
       setPlans(response.data);
-      /*alert("Mostrando Mis Planes");*/
     });
   };
-
-  /*Código Para Generar Estrellas de Calificación*/
 
   const StarRating = ({ rating }) => {
     const stars = [];
@@ -68,15 +73,13 @@ export default function AllPlans() {
             <h1 className="Titulos">Todos los Plantastik de la comunidad</h1>
           </center>
           {useEffect(() => {
-            if (authUser && authUser.idUser) {
-              getAllPlans(authUser.idUser);
-            }
-          }, [authUser])}
-          {AllPlansList.map((val, key) => {
-            
+            getPlanByName();
+            console.log("Aquí");
+          })}
+          {/* {PlansByName.map((val, key) => {
             return (
-              <div key={val.id_plan}>
-                <PlansAll
+              <div key={val.name}>
+                 <PlanByName
                   id_plan={val.id_plan}
                   title={val.NombrePlan}
                   user={val.name}
@@ -91,7 +94,7 @@ export default function AllPlans() {
                 />
               </div>
             );
-          })}
+          })} */}
         </Row>
       </Container>
     </>

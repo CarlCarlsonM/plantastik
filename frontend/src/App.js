@@ -9,6 +9,7 @@ import CreatePlan from "./components/create-plan.component";
 import MyInterestedPlans from "./components/my-interested-plans.component";
 import MyPlans from "./components/my-plans.component";
 import AllPlans from "./components/all-plans.component";
+import SearchPlanByName from "./components/plan-by-name.component";
 import UpdatePersonalData from "./components/update-personal-data.component";
 import { AuthProvider } from "./Contexts/AuthContext";
 import { useAuth } from "./Contexts/AuthContext";
@@ -44,6 +45,7 @@ function App() {
             />
             <Route exact path="/my-plans" element={<MyPlans />} />
             <Route exact path="/all-plans" element={<AllPlans />} />
+            <Route exact path="/plan-by-name/:name" element={<SearchPlanByName />} />
             <Route
               exact
               path="/update-personal-data"
