@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import Axios from "axios";
 
 import {
   MDBContainer,
@@ -31,7 +30,6 @@ export default function Header() {
   };
 
   const [query, setQuery] = useState("");
-  console.log("header", query);
   const navigate = useNavigate();
 
   const handleInput = (event) => {

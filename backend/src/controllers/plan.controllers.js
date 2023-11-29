@@ -4,7 +4,7 @@ export const searchMyPlans = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`,`plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id],
+    connection.query("SELECT `plan`.`id_plan`,`plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state`  FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -39,18 +39,17 @@ export const searchAllPlans = async (req, res) => {
 };
 
 export const searchPlanByName = async (req, res) => {
-    const name = req.params.name;
-    console.log(name);
+    const name = req.query.name; 
     updateStatePlan()
-    const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating WHERE `plan`.`name` = ?", [name],
+    const connection = await connectDB(); 
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating WHERE `plan`.`name` LIKE CONCAT('%', ?, '%')", [name],
         (err, result) => {
             if (err) {
                 connection.end();
                 console.log(err);
             } else {
                 connection.end();
-                console.log(result);
+                console.log("result");
                 res.send(result)
                 
             }

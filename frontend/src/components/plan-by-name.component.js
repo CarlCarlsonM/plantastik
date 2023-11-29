@@ -11,58 +11,17 @@ export default function SearchPlanByName() {
   const [PlansByName, setPlans] = useState([]);
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
 
-  const [state, setState] = useState({
-    password: "",
-    email: "",
-    login: false,
-    errors: {},
-  });
-
   const location = useLocation();
-    const name = location.pathname.split('/')[2]
-
-    console.log('idFromPath:',location.pathname.split('/')[2]);
-    console.log('idFromObjct:',name);
+  const name = decodeURIComponent(location.pathname.split('/')[2]);
 
   const getPlanByName = () => {
-    Axios.get(`http://localhost:3001/searchPlanByName`, {
+    Axios.get('http://localhost:3001/searchPlanByName', {
       params: {
-        name: "Plan 1"
+        name: name
       },
     }).then((response) => {
-        console.log(response.data);
       setPlans(response.data);
     });
-  };
-
-  const StarRating = ({ rating }) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      let starClass = "star";
-      if (rating > i) {
-        starClass += " rated";
-        if (rating < i + 1) {
-          starClass += " partial";
-          const percentage = ((rating - i) * 100).toFixed(1);
-          stars.push(
-            <span
-              key={i}
-              className={starClass}
-              style={{ "--fill": `${percentage}%` }}
-            >
-              ★
-            </span>
-          );
-          continue;
-        }
-      }
-      stars.push(
-        <span key={i} className={starClass}>
-          ★
-        </span>
-      );
-    }
-    return <div>{stars}</div>;
   };
 
   return (
@@ -73,13 +32,13 @@ export default function SearchPlanByName() {
             <h1 className="Titulos">Todos los Plantastik de la comunidad</h1>
           </center>
           {useEffect(() => {
+            console.log("Use effect");
             getPlanByName();
-            console.log("Aquí");
-          })}
-          {/* {PlansByName.map((val, key) => {
+          }, [name])}
+          {PlansByName.map((val, key) => {
             return (
               <div key={val.name}>
-                 <PlanByName
+                <PlanByName
                   id_plan={val.id_plan}
                   title={val.NombrePlan}
                   user={val.name}
@@ -94,7 +53,7 @@ export default function SearchPlanByName() {
                 />
               </div>
             );
-          })} */}
+          })}
         </Row>
       </Container>
     </>
