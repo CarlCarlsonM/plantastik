@@ -40,6 +40,7 @@ export default function DetailPlan(props) {
         initialPrice: "",
         finalPrice: "",
         location: "",
+        state: ""
       });
 
     
@@ -206,7 +207,8 @@ export default function DetailPlan(props) {
                 date: res.data[0].date_time,
                 initialPrice: res.data[0].min_price,
                 finalPrice: res.data[0].max_price,
-                location: res.data[0].address
+                location: res.data[0].address,
+                state: res.data[0].state
               });
 
               
@@ -322,6 +324,10 @@ export default function DetailPlan(props) {
                                 <h3 className='PlanTitle'>
                                     {state.title}
                                 </h3>
+                                
+                                <h4 className='PlanState'>
+                                <strong>Estado: </strong>{state.state}
+                                </h4>
 
                                 <p className='PlanUser'>
                                 <strong>Creado por: </strong>{state.user}
