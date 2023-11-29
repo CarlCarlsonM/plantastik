@@ -65,12 +65,14 @@ export default function MyPlans(props) {
                           </p>
                     </div>
 
-                    <Link to={`/edit-plan/${props.id_plan}`}>
+                    {props.state === 'Programado' ? (
+                      <Link to={`/edit-plan/${props.id_plan}`}>
                       <img 
                         src={require("../Iconos/editar.png")} 
                         className="BotonImagen" 
                         style={{cursor: 'pointer', float:'left'}}/>
                     </Link>
+                    ) : null}
 
                     <Link to={`/detail-plan/${props.id_plan}`}>
                       <img 

@@ -62,7 +62,7 @@ export default function UserInfo() {
               "success"
             )
             setIsLoggedIn(false);
-            navigate("login");
+            navigate("/login");
           }
           else {
             alert("Could not delete account")

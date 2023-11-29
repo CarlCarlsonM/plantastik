@@ -18,7 +18,7 @@ export default function CreatePlan() {
     avgRating: 0.0,
     date: "",
     time: "",
-    state: "Activo",
+    state: "Programado",
     minPrice: "",
     maxPrice: "",
     image: "",

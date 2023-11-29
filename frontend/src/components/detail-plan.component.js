@@ -96,8 +96,7 @@ export default function DetailPlan(props) {
 
   const updateRantingPlan = () => {
     Axios.put(`http://localhost:3001/updateRating`, {
-      idplan: state.idplan,
-      idplan: state.idplan,
+      idplan: state.idplan
     }).then((res) => {
       if (res.data.message === "succesful_insert") {
         console.log("Bien");

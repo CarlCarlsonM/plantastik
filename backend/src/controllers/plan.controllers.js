@@ -11,7 +11,6 @@ export const searchMyPlans = async (req, res) => {
                 console.log(err);
             } else {
                 connection.end();
-
                 res.send(result)
                 
             }
@@ -49,7 +48,6 @@ export const searchPlanByName = async (req, res) => {
                 console.log(err);
             } else {
                 connection.end();
-                console.log("result");
                 res.send(result)
                 
             }
@@ -69,7 +67,6 @@ export const DetailPlan = async (req, res) => {
                 connection.end();
                 console.log(err);
             } else {
-                console.log(result);
                 connection.end();
                 res.send(result) 
             }
@@ -99,7 +96,6 @@ export const listarData = async (req, res) => {
 }
 
 export const updateRating = async(req, res) =>{
-
     const {idplan}=req.body;
     const connection = await connectDB();
 
@@ -168,7 +164,6 @@ export const userCommentsValidation = async(req, res) =>{
 //consulta para saber si un usuario esta interesado en un plan
 export const Interested = async (req, res) => {
     const { idplan, iduser } = req.query;
-    updateStatePlan()
 
     const connection = await connectDB();
 
@@ -235,12 +230,12 @@ export const BeInterested = async (req, res) => {
 
 //Actualizar un plan
 export const updatePlan = async (req, res) => {
-    const { name, description, date, time, min_price, max_price, address, id_plan, id_user_plan } = req.body;
+    const { name, description, date, time, min_price, max_price, address, id_plan, id_user, state } = req.body;
     const date_time = `${date} ${time}:00`
     const id_plan_number = Number(id_plan) 
     const connection = await connectDB();
-    await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ? AND `id_user_plan` = ?',
-        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number,id_user_plan],
+    await connection.query('UPDATE `plan` SET `state` = ?, `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ? AND `id_user_plan` = ?',
+        [ state,name, description, date_time, min_price, max_price, address, id_plan_number, id_user],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -248,7 +243,6 @@ export const updatePlan = async (req, res) => {
                 return res.json({ message: "Failed" })
             } else {
                 connection.end();
-                console.log(result)
                 return res.json({ message: "Update_Plan" })
             }
         }
@@ -270,7 +264,6 @@ export const updatePlanAdm = async (req, res) => {
                 return res.json({ message: "Failed" })
             } else {
                 connection.end();
-                console.log(result)
                 return res.json({ message: "Update_Plan" })
             }
         }
