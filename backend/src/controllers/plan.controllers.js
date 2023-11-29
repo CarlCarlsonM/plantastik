@@ -4,7 +4,7 @@ export const searchMyPlans = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`,`plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id],
+    connection.query("SELECT `plan`.`id_plan`,`plan`.`name` AS `NombrePlan`,`user`.`name`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state`  FROM `plan`, `user` WHERE id_user_plan = ? and id_user = ?;", [id, id],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -23,7 +23,7 @@ export const searchAllPlans = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -43,7 +43,7 @@ export const DetailPlan = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
+    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address`,`state` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
         (err, result) => {
             
             if (err) {
@@ -312,7 +312,7 @@ export const searchMyInterestedPlans = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`,`user`.`name`,`plan`.`name` AS `NombrePlan`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image` FROM (plan INNER JOIN user_has_plans ON plan.id_plan=user_has_plans.id_plan_uhp) INNER JOIN `user` ON id_user=id_user_plan WHERE id_user_uhp=?;", [id],
+    connection.query("SELECT `plan`.`id_plan`,`user`.`name`,`plan`.`name` AS `NombrePlan`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state` FROM (plan INNER JOIN user_has_plans ON plan.id_plan=user_has_plans.id_plan_uhp) INNER JOIN `user` ON id_user=id_user_plan WHERE id_user_uhp=?;", [id],
         (err, result) => {
             if (err) {
                 connection.end();
