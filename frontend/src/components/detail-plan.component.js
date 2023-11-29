@@ -163,7 +163,8 @@ export default function DetailPlan(props) {
         title: res.data[0].planName,
         user: res.data[0].name,
         description: res.data[0].description,
-        date: res.data[0].date_time,
+        date: res.data[0].date,
+        time: res.data[0].time,
         initialPrice: res.data[0].min_price,
         finalPrice: res.data[0].max_price,
         location: res.data[0].address,
@@ -305,6 +306,9 @@ export default function DetailPlan(props) {
                     <div className="PlanSpecificData">
                       <p className="Date">
                         <strong> Fecha:</strong> {state.date}
+                      </p>
+                      <p className="Time">
+                        <strong> Hora:</strong> {state.time}
                       </p>
                       <p className="StartTime">
                         <strong> Precio minimo:</strong> {state.initialPrice}
