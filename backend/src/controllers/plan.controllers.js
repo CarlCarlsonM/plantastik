@@ -23,7 +23,7 @@ export const searchAllPlans = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
+    connection.query("SELECT `plan`.`id_plan`, `plan`.`name` AS `NombrePlan`, `user`.`name`, `description`, `address`, `avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`, TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state`, COALESCE(NumComentarios, 0) AS NumComentarios FROM `plan` JOIN `user` ON `plan`.`id_user_plan` = `user`.`id_user` LEFT JOIN (SELECT id_plan_rating, count(*) as NumComentarios FROM `rating` GROUP BY id_plan_rating) as cuenta ON id_plan = id_plan_rating", [id, id],
         (err, result) => {
             if (err) {
                 connection.end();
@@ -62,7 +62,7 @@ export const DetailPlan = async (req, res) => {
     const id = req.query.id;
     updateStatePlan()
     const connection = await connectDB();
-    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
+    connection.query("SELECT `image`,`avg_rating`,`plan`.`name` as planName,`user`.`name`,`description`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `date`, TIME_FORMAT(`date_time`, '%H:%i') AS `time`,`min_price`,`max_price`,`address`,`state` FROM `plan` JOIN `user` ON id_user_plan = id_user WHERE id_plan = ?", [id],
         (err, result) => {
             
             if (err) {
@@ -255,6 +255,29 @@ export const updatePlan = async (req, res) => {
     );
 };
 
+//Actualizar un plan desde el administrador
+export const updatePlanAdm = async (req, res) => {
+    const { name, description, date, time, min_price, max_price, address, id_plan } = req.body;
+    const date_time = `${date} ${time}:00`
+    const id_plan_number = Number(id_plan) 
+    const connection = await connectDB();
+    await connection.query('UPDATE `plan` SET `name` = ?, `description` = ?, `date_time` = ?, `min_price` = ?, `max_price` = ?, `address` = ? WHERE `id_plan` = ?',
+        [name, description, date_time, min_price, max_price, address,id_plan, id_plan_number],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log("error");
+                return res.json({ message: "Failed" })
+            } else {
+                connection.end();
+                console.log(result)
+                return res.json({ message: "Update_Plan" })
+            }
+        }
+    );
+};
+
+
 export const createMyPlan = async (req, res) => {
     const {name, description, address, avgRating, date, time, state, minPrice, maxPrice, image, id_user} = req.body;
     const date_time = `${date} ${time}:00`
@@ -298,6 +321,26 @@ export const updateStatePlan = async () => {
                         )
                     }
                 })
+            }
+        }
+    );
+};
+
+
+export const searchMyInterestedPlans = async (req, res) => {
+    const id = req.query.id;
+    updateStatePlan()
+    const connection = await connectDB();
+    connection.query("SELECT `plan`.`id_plan`,`user`.`name`,`plan`.`name` AS `NombrePlan`,`description`,`address`,`avg_rating`, DATE_FORMAT(`date_time`, '%Y-%m-%d') AS `Fecha`,  TIME_FORMAT(`date_time`, '%H:%i') AS `Hora`, `image`, `state` FROM (plan INNER JOIN user_has_plans ON plan.id_plan=user_has_plans.id_plan_uhp) INNER JOIN `user` ON id_user=id_user_plan WHERE id_user_uhp=?;", [id],
+        (err, result) => {
+            if (err) {
+                connection.end();
+                console.log(err);
+            } else {
+                connection.end();
+
+                res.send(result)
+                
             }
         }
     );

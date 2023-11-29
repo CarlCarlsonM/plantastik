@@ -15,7 +15,7 @@ import Swal from 'sweetalert2'
 import '../styles/admin-options.css'
 import '../styles/user-info.css';
 
-export default function Plns() {
+export default function AdmUpdPln() {
 
     const [state, setState] = useState({
         name: '',
@@ -124,31 +124,28 @@ export default function Plns() {
 
                                 //     nombrePlan = {val.name}
 
-                                // </div>
+                                // </div>a
                                 <div key={val.id_plan}>
                                     <Row>
-                                        <Col>
-                                            nombrePlan = {val.name}
-                                        </Col>
-                                        <Col>
-                                            idPlan={val.id_plan}
-                                        </Col>
+                                        <Col>nombrePlan = {val.name}</Col>
+                                        <Col>idPlan={val.id_plan}</Col>
+                                        <Col>idUsuario={val.id_user_plan}</Col>
+                                        <Col>estado={val.state}</Col>
                                         <Col>
                                             <ul className='d-flex'>
-                                                <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li>
-                                                {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
-                                                <li className='flex-fill' >
-                                                    <Button className='SmallButton'>
-                                                        {/* <Button className='SmallButton' as={Link} to="/update-personal-data"> */}
-                                                        Editar
-                                                    </Button>
-                                                </li>
+                                                {/* <li className='flex-fill' onClick={() => delPln(val.id_plan)}>Eliminar</li> */}
+                                                <Link to={`/ad-upd-pln/${val.id_plan}`}>
+                                                    <img
+                                                        src={require("../Iconos/editar.png")}
+                                                        className="BotonImagen"
+                                                        style={{ cursor: 'pointer', float: 'left' }} />
+                                                </Link>
                                             </ul>
                                         </Col>
                                     </Row>
 
                                 </div>
-
+                                
                             )
                         })
                     }

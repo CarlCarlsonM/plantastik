@@ -131,22 +131,22 @@ export default function Usrs() {
 
                 <div key={val.id_user}>
                   <Row>
-                    <Col>
-                      nombreUsuario = {val.name}
-                    </Col>
-                    <Col>
-                      idUser={val.id_user}
-                    </Col>
+                    <Col>IdUser:{val.id_user}</Col>
+                    <Col>NombreUsuario: {val.name}</Col>
+                    <Col>Contraseña: {val.password}</Col>
+                    <Col>Género: {val.gender}</Col>
+                    <Col>Edad: {val.age}</Col>
                     <Col>
                       <ul className='d-flex'>
-                        <li className='flex-fill' onClick={() => delUsr(val.id_user)}>Eliminar</li>
-                        {/* <li className='flex-fill' as={Link} to="/update-personal-data">Editar</li> */}
-                        <li className='flex-fill' >
-                          <Button className='SmallButton' as={Link} to="/update-personal-data">
-                            Editar
-                          </Button>
-                        </li>
+                        {/* <li className='flex-fill' onClick={() => delUsr(val.id_user)}>Eliminar</li> */}
+                        <Link to={`/ad-upd-usr/${val.id_user}`}>
+                          <img
+                            src={require("../Iconos/editar.png")}
+                            className="BotonImagen"
+                            style={{ cursor: 'pointer', float: 'left' }} />
+                        </Link>
                       </ul>
+                      {/* <Button onClick={delUsr(val.id_user)}>Eliminar</Button> */}
                     </Col>
                   </Row>
 

@@ -10,13 +10,14 @@
   display: inline;
   color: white;
   text-align: center;
-  background-color: gray;
+  background-color: rgb(58,113,203);
+
 }
 
 .tab ul li:hover {
-  color: black;
+  color: white;
   cursor: pointer;
-  background-color: white;
+  background-color: rgb(15,223,15);
 }
 
 .content {
